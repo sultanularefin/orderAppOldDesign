@@ -224,10 +224,12 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
                       // FROM FOOD ITEM PAGE.
 
 
-                      print('CLEAR SUBSCRIPTION ... before going to food gallery page..');
+
                       blocD.clearSubscription();
 
                       return Navigator.pop(context,tempSelectedFood);
+
+
 
 
                     },
@@ -1304,7 +1306,7 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
             final blocD = BlocProvider.of<FoodItemDetailsBloc>(context);
 //            final blocD = BlocProvider2.of(context).getFoodItemDetailsBlockObject;
 //            final foodItemDetailsbloc = BlocProvider.of<FoodItemDetailsBloc>(context);
-            blocD.finishMoreDefaultIngredientItems(/*oneSelected,index*/);
+            blocD.moreDefaultIngredientItems(/*oneSelected,index*/);
 
             setState(() {
 
@@ -1814,10 +1816,9 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
           .elementAt(i);
       dynamic value = foodSizePrice
           .values.elementAt(i);
-
-
 //
-      double valuePrice = tryCast<double>(value, fallback: 0.0);
+      double valuePrice = tryCast<
+          double>(value, fallback: 0.0);
 
 
       if((valuePrice!=0.0)&&(valuePrice!=0.00)) {
@@ -2158,78 +2159,78 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
 //                print(
 //                    'at Long Press Sauce Item: ');
 //              },
-              onTap: () {
-                print('for future use');
-                final blocD = BlocProvider.of<FoodItemDetailsBloc>(context);
+            onTap: () {
+              print('for future use');
+              final blocD = BlocProvider.of<FoodItemDetailsBloc>(context);
 
 //                blocD.setThisSauceFROMSelectedSauceItem(oneSauce,index);
 //                blocD.setThisSauceAsSelectedSauceItem(oneSauceItem, index)
-                blocD.setThisSauceAsSelectedSauceItem(oneSauce,index);
+              blocD.setThisSauceAsSelectedSauceItem(oneSauce,index);
 //                            return Navigator.push(context,
 //
 //                                MaterialPageRoute(builder: (context)
 //                                => FoodItemDetails())
 //                            );
-              },
-              onLongPressUp: (){
+            },
+            onLongPressUp: (){
 
-                print(
-                    'at Long Press UP Sauce Item Item: nothing will happen already unslected.. ');
+              print(
+                  'at Long Press UP Sauce Item Item: nothing will happen already unslected.. ');
 //                blocD.toggleThisSauceAsSelected(oneSauce,index);
 //                blocD.addThisCheeseAsSelectedCheeseItem(oneSauce,index)
 
-              },
+            },
 
 
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
 
-                  new Container(
+                new Container(
 
-                    height: displayHeight(context) / 24,
-                    width: displayWidth(context) / 16.5,
+                  height: displayHeight(context) / 24,
+                  width: displayWidth(context) / 16.5,
 //                      width: displayWidth(context) /10,
 //                      height: displayWidth(context) /9,
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
 
-                    child: ClipOval(
+                  child: ClipOval(
 
-                      child: CachedNetworkImage(
-                        imageUrl: sauceItemImageURL,
-                        fit: BoxFit.cover,
-                        placeholder: (context,
-                            url) => new LinearProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            Image.network(
-                                'https://firebasestorage.googleapis.com/v0/b/link-up-b0a24.appspot.com/o/404%2Fingredient404.jpg?alt=media'),
+                    child: CachedNetworkImage(
+                      imageUrl: sauceItemImageURL,
+                      fit: BoxFit.cover,
+                      placeholder: (context,
+                          url) => new LinearProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          Image.network(
+                              'https://firebasestorage.googleapis.com/v0/b/link-up-b0a24.appspot.com/o/404%2Fingredient404.jpg?alt=media'),
 //
-                      ),
                     ),
                   ),
+                ),
 //                              SizedBox(height: 10),
-                  Container(
-                    width: displayWidth(context) / 9,
-                    child: Text(
-                      sauceItemName,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Color(0xff707070),
+                Container(
+                  width: displayWidth(context) / 9,
+                  child: Text(
+                    sauceItemName,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Color(0xff707070),
 //                                    color: Colors.blueGrey[800],
 
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 14,
 
-                      ),
                     ),
-                  )
-                  ,
+                  ),
+                )
+                ,
 
 
-                ],
-              ),
+              ],
+            ),
 
           ),
 

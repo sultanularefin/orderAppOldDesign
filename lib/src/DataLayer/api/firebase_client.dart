@@ -482,7 +482,7 @@ class FirebaseClient {
 
     var snapshot= await FirebaseFirestore.instance
         .collection("restaurants").doc('kebab_bank').
-    collection('categories').orderBy("rating", descending: true)
+    collection('categoriesOld').orderBy("sequenceNo", /*descending: true*/)
         .get();
 
     return snapshot;

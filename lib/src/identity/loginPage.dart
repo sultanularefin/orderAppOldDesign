@@ -4,7 +4,8 @@
 
 // C:\Users\Taxi\Programs\KebabBankSeptemberOrderApp
 
-import 'file:///C:/Users/Taxi/Programs/KebabBankSeptemberOrderApp/lib/src/identity/SignUpPage.dart';
+// import 'package:foodgallery/lib/src/identity/SignUpPage.dart';
+import 'package:foodgallery/src/identity/SignUpPage.dart';
 import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

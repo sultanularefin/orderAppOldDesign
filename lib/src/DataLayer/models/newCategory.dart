@@ -4,7 +4,7 @@ class NewCategoryItem {
 
   String categoryName;
   String imageURL;
-  double rating;
+  int rating;
   double totalRating;
 //  String ingredients;
 

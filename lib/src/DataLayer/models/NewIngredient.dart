@@ -18,7 +18,7 @@ import 'dart:core';
 class NewIngredient {
 
   final String ingredientName;
-  final String imageURL;
+  /*final*/ String imageURL;
   final double price;
   final String documentId;
   final int    ingredientAmountByUser;
@@ -55,6 +55,17 @@ class NewIngredient {
         documentId = docID,
         isDefault= false,
         ingredientAmountByUser = 1;
+
+
+  // PURPOSE SETTING ISDEFAULT TRUE INORDER TO CALCULATE PRICE UPON NEW INGREDIENT ADD
+  NewIngredient.updateSelectedIngredient(NewIngredient oneIngredient)
+      :imageURL= oneIngredient.imageURL,
+        ingredientName= oneIngredient.ingredientName,
+        price = oneIngredient.price,
+        documentId = oneIngredient.documentId,
+        ingredientAmountByUser = 0,
+        isDefault= true;
+
 
 
   NewIngredient.updateUnselectedIngredient(NewIngredient oneIngredient)
