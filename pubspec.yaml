@@ -126,10 +126,10 @@ flutter:
     - assets/phone.png
     - assets/history.png
     #     - assets/logo.png
-    - assets/multiselectImages/multiSelectAssetM.png
-    - assets/multiselectImages/multiSelectAssetVSM.png
-    - assets/multiselectImages/multiSelectAssetVS.png
-    - assets/multiselectImages/multiSelectAssetORG.png
+#    - assets/multiselectImages/multiSelectAssetM.png
+#    - assets/multiselectImages/multiSelectAssetVSM.png
+#    - assets/multiselectImages/multiSelectAssetVS.png
+#    - assets/multiselectImages/multiSelectAssetORG.png
 
 
 
