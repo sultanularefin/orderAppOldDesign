@@ -517,7 +517,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30),
             ),
             TextSpan(
-              text: 'app',
+              text: 'app old version',
               style: TextStyle(
                   color:
                   //Color(0xffe46b10),

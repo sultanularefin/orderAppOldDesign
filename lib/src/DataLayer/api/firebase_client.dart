@@ -42,7 +42,7 @@ class OrderedFood{
   final String image;
 //  int          quantity;
 //  final String foodItemSize;
-// final String foodItemOrderID;     // random might not be needed.
+// final String foodItemOrder.id;     // random might not be needed.
 //  List<NewIngredient> selectedIngredients;
 //
 //  category
@@ -80,14 +80,14 @@ class FirebaseClient {
 
     /*
     var snapshot= Firestore.instance
-        .collection("restaurants").document('USWc8IgrHKdjeDe9Ft4j').collection('foodItems').limit(65)
-        .getDocuments();
+        .collection("restaurants").doc('kebab_bank').collection('foodItems').limit(65)
+        .get();
     */
 
 
-    var snapshot= Firestore.instance
-        .collection("restaurants").document('USWc8IgrHKdjeDe9Ft4j').collection('foodItems').orderBy('sl',descending: false)
-        .getDocuments();
+    var snapshot= await FirebaseFirestore.instance
+        .collection("restaurants").doc('kebab_bank').collection('foodItems2').orderBy('sequenceNo',/*descending: false*/)
+        .get();
 
 //    orderBy('_timeStampUTC', descending: true)
     return snapshot;
@@ -98,14 +98,14 @@ class FirebaseClient {
 
     // print ('at here fetchAllIngredients ==================================== *************** ');
 
-    var snapshot = await Firestore.instance.collection("restaurants")
-        .document('USWc8IgrHKdjeDe9Ft4j')
-        .collection('sauces').orderBy("sl", descending: false)
-        .getDocuments();
+    var snapshot = await FirebaseFirestore.instance.collection("restaurants")
+        .doc('USWc8IgrHKdjeDe9Ft4j')
+        .collection('sauces').orderBy("sequenceNo", /*descending: false*/)
+        .get();
 
 //    var snapshot= Firestore.instance
-//        .collection("restaurants").document('USWc8IgrHKdjeDe9Ft4j').collection('foodItems')
-//        .getDocuments();
+//        .collection("restaurants").doc('kebab_bank').collection('foodItems')
+//        .get();
 
     return snapshot;
   }
@@ -114,14 +114,14 @@ class FirebaseClient {
 
     // print ('at here fetchAllIngredients ==================================== *************** ');
 
-    var snapshot = await Firestore.instance.collection("restaurants")
-        .document('USWc8IgrHKdjeDe9Ft4j')
-        .collection('juusto').orderBy("sl", descending: false)
-        .getDocuments();
+    var snapshot = await FirebaseFirestore.instance.collection("restaurants")
+        .doc('USWc8IgrHKdjeDe9Ft4j')
+        .collection('juusto').orderBy("sequenceNo", /*descending: false*/)
+        .get();
 
 //    var snapshot= Firestore.instance
-//        .collection("restaurants").document('USWc8IgrHKdjeDe9Ft4j').collection('foodItems')
-//        .getDocuments();
+//        .collection("restaurants").doc('kebab_bank').collection('foodItems')
+//        .get();
 
     return snapshot;
   }
@@ -130,14 +130,14 @@ class FirebaseClient {
 
     // print ('at here fetchAllIngredients ==================================== *************** ');
 
-    var snapshot = await Firestore.instance.collection("restaurants")
-        .document('USWc8IgrHKdjeDe9Ft4j')
+    var snapshot = await FirebaseFirestore.instance.collection("restaurants")
+        .doc('USWc8IgrHKdjeDe9Ft4j')
         .collection('ingredients')
-        .getDocuments();
+        .get();
 
 //    var snapshot= Firestore.instance
-//        .collection("restaurants").document('USWc8IgrHKdjeDe9Ft4j').collection('foodItems')
-//        .getDocuments();
+//        .collection("restaurants").doc('kebab_bank').collection('foodItems')
+//        .get();
 
     return snapshot;
   }
@@ -146,9 +146,9 @@ class FirebaseClient {
 
   Future<DocumentSnapshot> fetchRestaurantDataClient() async{
 
-    var snapshot = Firestore.instance
+    var snapshot = await FirebaseFirestore.instance
         .collection('restaurants')
-        .document('USWc8IgrHKdjeDe9Ft4j')
+        .doc('USWc8IgrHKdjeDe9Ft4j')
         .get();
     /*
         .then((DocumentSnapshot ds) {
@@ -159,8 +159,8 @@ class FirebaseClient {
         .document('USWc8IgrHKdjeDe9Ft4j');
 
 //    var snapshot= Firestore.instance
-//        .collection("restaurants").document('USWc8IgrHKdjeDe9Ft4j').collection('foodItems')
-//        .getDocuments();
+//        .collection("restaurants").doc('kebab_bank').collection('foodItems')
+//        .get();
 
     return snapshot;
 
@@ -173,9 +173,9 @@ class FirebaseClient {
 
     print('at firebase_client.dart file inside this method: \"invokeClientForOneOrder\"');
 
-    var snapshot = Firestore.instance
+    var snapshot = await FirebaseFirestore.instance
         .collection('restaurants')
-        .document('USWc8IgrHKdjeDe9Ft4j').collection('orderList').document(orderDocumentId)
+        .doc('USWc8IgrHKdjeDe9Ft4j').collection('orderList').doc(orderDocumentId)
         .get();
 
     print('and the snapshot is: $snapshot');
@@ -191,7 +191,7 @@ class FirebaseClient {
 //    ingredientName;
 //    imageURL;
 //    price;
-//    documentId;
+//    document.id;
 //    ingredientAmountByUser
 
 
@@ -262,7 +262,7 @@ class FirebaseClient {
 //    ingredientName;
 //    imageURL;
 //    price;
-//    documentId;
+//    document.id;
 //    ingredientAmountByUser
 
     print('sauceItems.length: ${sauceItems.length}');
@@ -339,13 +339,13 @@ class FirebaseClient {
       (String orderDocumentId, String status) async {
     print('orderDocumentId in updateOrderCollectionDocumentWithRecitePrintedInformation: $orderDocumentId');
 
-    final DocumentReference postRef = Firestore.instance.collection(
+    final DocumentReference postRef = await FirebaseFirestore.instance.collection(
         "restaurants").
-    document('USWc8IgrHKdjeDe9Ft4j').
-    collection('orderList').document(orderDocumentId);
+    doc('USWc8IgrHKdjeDe9Ft4j').
+    collection('orderList').doc(orderDocumentId);
 
 
-    Future<Map<String, dynamic>> test=    Firestore.instance.runTransaction((Transaction tx) async {
+    Future<Map<String, dynamic>> test=    await FirebaseFirestore.instance.runTransaction((Transaction tx) async {
 
       DocumentSnapshot postSnapshot = await tx.get(postRef);
 
@@ -366,13 +366,13 @@ class FirebaseClient {
 
 
    return test.whenComplete(() => print("update complete let\'s download the data")
-   ).then((document) {
+   ).then((document) async {
 
 
-     var snapshot = Firestore.instance.collection(
+     var snapshot = await FirebaseFirestore.instance.collection(
          "restaurants").
-     document('USWc8IgrHKdjeDe9Ft4j').
-     collection('orderList').document(orderDocumentId)
+     doc('USWc8IgrHKdjeDe9Ft4j').
+     collection('orderList').doc(orderDocumentId)
          .get();
 //     print('async result [document] for runTransaction in order : $document');
 //     return true;
@@ -412,7 +412,7 @@ class FirebaseClient {
 
       e.foodItemImageURL;
       e.unitPrice;
-      e.foodDocumentId;
+      e.foodDocument.id;
       e.quantity;
       e.foodItemSize;
 
@@ -423,9 +423,9 @@ class FirebaseClient {
     String orderDocId='';
     // print('saving order data using a web service');
 
-    DocumentReference document = await Firestore.instance.collection(
+    DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
-    document('USWc8IgrHKdjeDe9Ft4j').
+    doc('USWc8IgrHKdjeDe9Ft4j').
 //    collection('orderList').add(switch (<String, dynamic>{
     collection('orderList').add(<String, dynamic>{
 
@@ -460,7 +460,7 @@ class FirebaseClient {
     }).whenComplete(() => print("called when future completes"))
         .then((document) {
       //  print('Added document with ID: ${document.documentID}');
-      orderDocId= document.documentID;
+      orderDocId= document.id;
 //      return document;
 //                            _handleSignIn();
     }).catchError((onError) {
@@ -480,10 +480,10 @@ class FirebaseClient {
 
     //print ('at here fetchCategories ==================================== *************** ');
 
-    var snapshot= Firestore.instance
-        .collection("restaurants").document('USWc8IgrHKdjeDe9Ft4j').
+    var snapshot= await FirebaseFirestore.instance
+        .collection("restaurants").doc('kebab_bank').
     collection('categories').orderBy("rating", descending: true)
-        .getDocuments();
+        .get();
 
     return snapshot;
 
