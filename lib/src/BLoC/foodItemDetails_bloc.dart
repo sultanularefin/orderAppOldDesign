@@ -23,7 +23,7 @@ import 'package:logger/logger.dart';
 
 import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocID.dart';
 //import 'package:foodgallery/src/DataLayer/CategoryItemsLIst.dart';
-//import 'package:foodgallery/src/DataLayer/NewCategoryItem.dart';
+//import 'package:foodgallery/src/DataLayer/newCategory.dart';
 //import 'package:zomatoblock/DataLayer/location.dart';
 import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocIDViewModel.dart';
 
@@ -69,10 +69,17 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
   // can also use var _oneFoodItem = new FoodItemWithDocID() ;
 //  FoodItemWithDocID _oneFoodItem = new FoodItemWithDocID() ;
   FoodItemWithDocIDViewModel _thisFoodItem ;
+//  String _currentSize = 'normal';
+
+//  var _currentSize = new Map<String ,double>(); // currentlyNotUsing.
+
+//  Map<String,Dynamic>
 
   FoodItemWithDocIDViewModel get currentFoodItem => _thisFoodItem;
 
-
+//  _thisFoodItem =thisFoodpriceModified;
+//
+//  _controller.sink.add(thisFoodpriceModified);
 
   List<NewIngredient> _allIngItemsDetailsBlock =[];
 
@@ -82,8 +89,6 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
   List<FoodPropertyMultiSelect> _multiSelectForFood =[];
 //  Order _currentSelectedFoodDetails ;
   SelectedFood _currentSelectedFoodDetails;
-
-
 
 
 //  List <NewIngredient> ingItems = new List<NewIngredient>();
@@ -205,20 +210,20 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
 
 
     var snapshot = await _client.fetchAllIngredients();
-    List docList = snapshot.documents;
+    List docList = snapshot.docs;
 
 
 
     List <NewIngredient> ingItems = new List<NewIngredient>();
-    ingItems = snapshot.documents.map((documentSnapshot) =>
+    ingItems = snapshot.docs.map((documentSnapshot) =>
         NewIngredient.ingredientConvert
-          (documentSnapshot.data, documentSnapshot.documentID)
+          (documentSnapshot.data(), documentSnapshot.id)
 
     ).toList();
 
 
-    List<String> documents = snapshot.documents.map((documentSnapshot) =>
-    documentSnapshot.documentID
+    List<String> documents = snapshot.docs.map((documentSnapshot) =>
+    documentSnapshot.id
     ).toList();
 
 //    print('Ingredient documents are: $documents');
@@ -427,7 +432,6 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
       foodItemImageURL: oneFoodItem.imageURL,
       unitPrice: 0, // this value will be set when increment and decreemnt
       //button pressed from the UI.
-      unitPriceWithoutCheeseIngredientSauces:0,
       foodDocumentId: oneFoodItem.documentId,
       quantity:0,
       foodItemSize: 'normal', // to be set from the UI.
@@ -696,7 +700,6 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
       oneSelectedFoodFD.selectedIngredients = _defaultIngItems;
       oneSelectedFoodFD.selectedCheeseItems = _allSelectedCheeseItems;
       oneSelectedFoodFD.selectedSauceItems  = _allSelectedSauceItems;
-
 
 
 
@@ -1028,7 +1031,7 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
 
     FoodItemWithDocIDViewModel thisFoodpriceModified = _thisFoodItem;
     thisFoodpriceModified.itemSize = sizeKey;
-    thisFoodpriceModified.itemPriceBasedOnSize =  changedPriceDouble;
+    thisFoodpriceModified.itemPrice =  changedPriceDouble;
     thisFoodpriceModified.priceBasedOnCheeseSauceIngredientsSize = changedPriceDouble;
 
 
@@ -1079,7 +1082,6 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
 
   }
 
-  /*
   void setNewPriceBySelectedCheeseItems(List<CheeseItem> cheeseItems) {
 
     double addedCheeseItemsPrice = cheeseItems.fold(0, (t, e) => t + e.price);
@@ -1106,8 +1108,6 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
 
 
   }
-
-  */
 
   void setNewPriceforSauceItemCheeseItemIngredientUpdate(/*List<SauceItem> sauceItems*/) {
 
@@ -1159,7 +1159,7 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
     FoodItemWithDocIDViewModel thisFoodpriceModified = _thisFoodItem;
 
 //    double previousPrice = _thisFoodItem.priceBasedOnCheeseSauceIngredientsSize;
-    double previousPrice = _thisFoodItem.itemPriceBasedOnSize;
+    double previousPrice = _thisFoodItem.itemPrice;
 
     print('previous  price: $previousPrice');
 
@@ -1168,7 +1168,7 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
     thisFoodpriceModified.priceBasedOnCheeseSauceIngredientsSize = previousPrice + addedSauceItemsPrice
         + addedCheeseItemsPrice + addedIngredientsItemsPrice;
 
-    print('modified price for new SauceItem cheeseItem addition or remove: '
+    print('modified price for new SauceItem addition or remove: '
         '${thisFoodpriceModified.priceBasedOnCheeseSauceIngredientsSize}');
 
 //    print('changedPriceDouble: $changedPriceDouble');
@@ -1176,25 +1176,6 @@ class FoodItemDetailsBloc /*with ChangeNotifier */ implements Bloc  {
     _thisFoodItem =thisFoodpriceModified;
 
     _controller.sink.add(thisFoodpriceModified);
-
-
-
-
-    print( '>>>> initialItemCount == 0  <<<< ');
-
-
-    SelectedFood tempSelectedFood = _currentSelectedFoodDetails ;
-
-    // REQUIRED ...
-    tempSelectedFood.selectedIngredients  = _defaultIngItems;
-    tempSelectedFood.selectedCheeseItems  = _allSelectedCheeseItems;
-    tempSelectedFood.selectedSauceItems   = _allSelectedSauceItems;
-    tempSelectedFood.unitPrice            = thisFoodpriceModified.priceBasedOnCheeseSauceIngredientsSize;
-    tempSelectedFood.unitPriceWithoutCheeseIngredientSauces = thisFoodpriceModified.itemPriceBasedOnSize;
-
-    _currentSelectedFoodDetails = tempSelectedFood;
-
-    _selectedFoodControllerFoodDetails.sink.add(_currentSelectedFoodDetails);
 
   }
 

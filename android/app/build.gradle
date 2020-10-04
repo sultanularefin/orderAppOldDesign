@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.linkup.foodgallery"
+        applicationId "com.arefin.oldOrderApp"
 //        minSdkVersion 16
         // changed on june 20. 16 to 21
         minSdkVersion 22

@@ -27,7 +27,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocID.dart';
 //import 'package:foodgallery/src/DataLayer/CategoryItemsLIst.dart';
 //    ''file:
-///C:/Users/Taxi/Programs/foodgallery/lib/src/DataLayer/models/NewCategoryItem.dart'tegory.dart';
+///C:/Users/Taxi/Programs/foodgallery/lib/src/DataLayer/models/newCategory.dart'tegory.dart';
 
 
 
@@ -209,7 +209,7 @@ class FirebaseClient {
             '').replaceAll('?alt=media', '')),
 //        ROzgCEcTA7J9FpIIQJra
         'ingredientAmountByUser': si[counter].ingredientAmountByUser,
-        'ingredientPrice':si[counter].price,
+        'price':si[counter].price,
         'isDefault':si[counter].isDefault,
 
       };
@@ -243,7 +243,7 @@ class FirebaseClient {
             '').replaceAll('?alt=media', '')),
 //        ROzgCEcTA7J9FpIIQJra
         'cheeseItemAmountByUser': cheeseItems[counter].cheeseItemAmountByUser,
-        'cheeseItemPrice':cheeseItems[counter].price,
+        'price':cheeseItems[counter].price,
         'isDefaultSelected':cheeseItems[counter].isDefaultSelected,
 
       };
@@ -284,7 +284,7 @@ class FirebaseClient {
             '').replaceAll('?alt=media', '')),
 //        ROzgCEcTA7J9FpIIQJra
         'sauceItemAmountByUser': sauceItems[counter].sauceItemAmountByUser,// +1, // 1 is added since by default it is zero
-        'sauceItemPrice':sauceItems[counter].price,
+        'price':sauceItems[counter].price,
         'isDefaultSelected':sauceItems[counter].isDefaultSelected,
 
       };
@@ -321,7 +321,6 @@ class FirebaseClient {
         'name':sf[counter].foodItemName,
         'oneFoodTypeTotalPrice': sf[counter].quantity * sf[counter].unitPrice,
         'unitPrice':sf[counter].unitPrice,
-        'unitPriceWithoutCheeseIngredientSauces': sf[counter].unitPriceWithoutCheeseIngredientSauces, // for recite
         'foodItemSize':sf[counter].foodItemSize,
       };
       testFoodItems.add(identifier);
@@ -448,12 +447,6 @@ class FirebaseClient {
       'paidStatus': paidType != 'Later' ? 'Paid' : 'Unpaid',
       'paidType': paidType,
       'price': currentOrderToFirebase.totalPrice,
-      'tax': (14/100)*(currentOrderToFirebase.totalPrice),
-      'priceWithDelivery?':orderBy == 'Phone' ? (currentOrderToFirebase.totalPrice) : orderBy == 'Delivery'
-          ? (currentOrderToFirebase.totalPrice + 2.50)
-          : orderBy == 'TakeAway' ? (currentOrderToFirebase.totalPrice )
-        : (currentOrderToFirebase.totalPrice) ,
-
       'start': FieldValue.serverTimestamp(),
       // time when order is placed in firestore by clicking the pay button
       'status': "ready",
@@ -463,9 +456,6 @@ class FirebaseClient {
           : orderBy == 'TakeAway' ? 'TakeAway' : 'DinningRoom',
       'orderProductionTime': currentOrderToFirebase.orderingCustomer.etaTimeInMinutes,
       'recitePrinted':'false',
-      'deliveryCost?':orderBy == 'Phone' ? 0.00 : orderBy == 'Delivery'
-          ? 2.50
-          : orderBy == 'TakeAway' ? 0.00 : 0.00,
 
     }).whenComplete(() => print("called when future completes"))
         .then((document) {

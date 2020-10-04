@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart'; // to be removed later.
 import 'package:flutter/material.dart';
 import 'package:foodgallery/src/DataLayer/models/CheeseItem.dart';
 import 'package:foodgallery/src/DataLayer/models/CustomerInformation.dart';
-import 'package:foodgallery/src/DataLayer/models/NewCategoryItem.dart';
 import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
 import 'package:foodgallery/src/DataLayer/models/OneOrderFirebase.dart';
 import 'package:foodgallery/src/DataLayer/models/OrderedItem.dart';
@@ -114,10 +113,10 @@ class ShoppingCartBloc implements Bloc {
 
 
 
-  List<NewCategoryItem> _allCategories =[];
-  List<NewCategoryItem> get getAllCategories => _allCategories;
-  final _categoriesController = StreamController<List<NewCategoryItem>>();
-  Stream <List<NewCategoryItem>> get getCategoryItemsStream => _categoriesController.stream;
+//  List<String> _devices =[];
+//  List<String> get getDevices => _devices;
+//  final _devicesController = StreamController<List<String>>();
+//  Stream <List<String>> get getDevicesStream => _devicesController.stream;
 
   /*
   Stream<CustomerInformation> get getCurrentCustomerInformationStream =>
@@ -219,7 +218,7 @@ class ShoppingCartBloc implements Bloc {
 
   ShoppingCartBloc(
       /*FoodItemWithDocID oneFoodItem, List<NewIngredient> allIngsScoped */
-      Order x,List<NewCategoryItem> allCategories
+      Order x
       ) {
 
     /*
@@ -306,12 +305,6 @@ class ShoppingCartBloc implements Bloc {
     _orderController.sink.add(x);
 //    }
 
-
-  // put categoryitems here..
-
-    _allCategories=allCategories;
-    _categoriesController.sink.add(_allCategories);
-
   }
 // CONSTRUCTOR ENDS HERE.
 
@@ -327,8 +320,6 @@ class ShoppingCartBloc implements Bloc {
     oneSelectedFood.quantity = 1;
     print('oneSelectedFood.quantity is: ${oneSelectedFood.quantity}');
     print('oneSelectedFood.foodItemName is: ${oneSelectedFood.foodItemName}');
-    logger.i('oneSelectedFood.unitPrice is: ${oneSelectedFood.unitPrice}');
-    logger.i('oneSelectedFood.subTotalPrice is:${oneSelectedFood.subTotalPrice}');
 
     List<SelectedFood> multiplied = List.filled(fillingLength, oneSelectedFood);
 
@@ -496,18 +487,6 @@ class ShoppingCartBloc implements Bloc {
 
   }
 
-
-  int checkRating(String oneCategoryString, String secondCategoryString, List<NewCategoryItem> allCats){
-
-    NewCategoryItem firstCategory = allCats.where((element) => element.categoryName == oneCategoryString).first;
-    NewCategoryItem secondCategory = allCats.where((element) => element.categoryName == secondCategoryString).first;
-
-//    numbers.sort((a, b) => a.length.compareTo(b.length));
-    return firstCategory.rating.compareTo(secondCategory.rating);
-
-//    return firstCategory.rating > secondCategory.rating;
-
-  }
   Future<Order> paymentButtonPressed(Order payMentProcessing) async{
 
     String orderBy =    _orderType[payMentProcessing.orderTypeIndex].orderType;
@@ -580,6 +559,10 @@ class ShoppingCartBloc implements Bloc {
       oneFood.quantity= oneFood.quantity-1; //initially 1 that was incremented in the previous forEach loop.
       print('oneFood.quantity SS: ${oneFood.quantity}');
 
+
+
+
+
     });
 
 
@@ -588,31 +571,6 @@ class ShoppingCartBloc implements Bloc {
 
 
     tempOrder.selectedFoodInOrder = selectedFoodCheckForListToSet.toList();
-
-
-    List<SelectedFood> tempForCategorising=  tempOrder.selectedFoodInOrder;
-
-    // todo sorting by categories ....
-
-    // group by category will be done here...
-
-//    List<NewCategoryItem> tempCategoryForCategorisingOrderedFoods = _allCategories;
-
-    tempForCategorising.sort((a,b)=>checkRating(a.categoryName,b.categoryName,
-        _allCategories));
-
-    List<SelectedFood> tempForCategorising2 =  new List.from(tempForCategorising.reversed);
-    /* List<String> numbers2 */
-
-
-
-
-
-//    categoryName
-//    _allCategories
-
-
-    tempOrder.selectedFoodInOrder = tempForCategorising2;
 
 
 
@@ -669,8 +627,8 @@ class ShoppingCartBloc implements Bloc {
         ingredientName: oneFireStoreSauce['name'] ,
         imageURL: oneFireStoreSauce['image'] ,
         ingredientAmountByUser: oneFireStoreSauce['ingredientAmountByUser'] ,
-          isDefault:oneFireStoreSauce['isDefault'],
-        price:oneFireStoreSauce['ingredientPrice'],
+        isDefault:oneFireStoreSauce['isDefault'],
+        price:oneFireStoreSauce['price'],
 //          isDefault: oneFireStoreSauce['isDefault'],
 
       );
@@ -716,7 +674,7 @@ class ShoppingCartBloc implements Bloc {
         cheeseItemName: oneCheeseItem['name'] ,
         imageURL: oneCheeseItem['image'] ,
         cheeseItemAmountByUser: oneCheeseItem['cheeseItemAmountByUser'] ,
-        price: oneCheeseItem['cheeseItemPrice'] ,
+        price: oneCheeseItem['price'] ,
         isDefaultSelected:  oneCheeseItem['isDefaultSelected'],
 
       );
@@ -758,7 +716,7 @@ class ShoppingCartBloc implements Bloc {
         sauceItemName: oneSauceItem['name'] ,
         imageURL: oneSauceItem['image'] ,
         sauceItemAmountByUser: oneSauceItem['sauceItemAmountByUser'] ,
-        price: oneSauceItem['sauceItemPrice'],
+        price: oneSauceItem['price'],
         isDefaultSelected: oneSauceItem['isDefaultSelected'],
 
       );
@@ -824,10 +782,7 @@ class ShoppingCartBloc implements Bloc {
     String                    tableNo = snapshot['tableNo'];
     String                    orderType = snapshot['orderType'];
     String                    documentId = orderDocumentId;
-    int                    orderProductionTime = snapshot['orderProductionTime'];
-    double                 deliveryCost2 = snapshot['deliveryCost?'];
-    double                 tax = snapshot['tax'];
-    double                 priceWithDelivery2 = snapshot['priceWithDelivery?'];
+    int                    orderProductionTime= snapshot['orderProductionTime'];
 
 
     CustomerInformation currentCustomerFromFireStore = localCustomerInformationObject(customerAddress);
@@ -863,40 +818,23 @@ class ShoppingCartBloc implements Bloc {
     print('startDate: $startDate');
 
 //    final now = DateTime.now();
-    final formatter1 = /*DateFormat('MM/dd/yyyy H:m'); */ DateFormat.yMMMMd('en_US');
+    final formatter1 = /*DateFormat('MM/dd/yyyy H:m'); */ DateFormat.yMMMMd('en_US').add_jm();
     final String timestamp = formatter1.format(startDate);
 
-    final formatter2 = /*DateFormat('MM/dd/yyyy H:m'); */ DateFormat.yMMMMd('en_US').add_Hm();
-    final String timestamp2 = formatter1.format(startDate);
-
     print('timestamp: $timestamp');
-    print('timestamp2: $timestamp2');
-
-    final formatter3 =  DateFormat.jm();
-    final formatter4 =  DateFormat.Hm();
-
+    final formatter2 =  DateFormat.jm();
     final String formattedOrderPlacementDatesTimeOnly = formatter2.format(startDate);
-
-    final String formattedOrderPlacementDatesTimeOnly2 = formatter4.format(startDate);
-
-    print('formattedOrderPlacementDatesTimeOnly2: $formattedOrderPlacementDatesTimeOnly2');
-    print('formattedOrderPlacementDatesTimeOnly: $formattedOrderPlacementDatesTimeOnly');
-
     print('orderProductionTime: $orderProductionTime');
+//    ticket.text(timestamp,
+//        styles: PosStyles(align: PosAlign.center), linesAfter: 2);
 
-    //    ticket.text(timestamp,
-    //        styles: PosStyles(align: PosAlign.center), linesAfter: 2);
+//    new DateFormat.yMMMMd('en_US')
+//    new DateFormat.jm()
+//    new DateFormat.yMd().add_jm()
 
-    //    new DateFormat.yMMMMd('en_US')
-    //    new DateFormat.jm()
-    //    new DateFormat.yMd().add_jm()
-
-    //    -> July 10, 1996
-    //    -> 5:08 PM
-    //    -> 7/10/1996 5:08 PM
-
-
-
+//    -> July 10, 1996
+//    -> 5:08 PM
+//    -> 7/10/1996 5:08 PM
     print('orderStatus: $orderStatus'); // "ready"
     print('tableNo: $tableNo');
     print('orderType: $orderType');
@@ -917,8 +855,7 @@ class ShoppingCartBloc implements Bloc {
       print('unitPrice: ${oneFoodItem['unitPrice']}');
       print('unitPrice: ${oneFoodItem['foodImage']}');
       print('unitPrice: ${oneFoodItem['discount']}');
-      print('unitPriceWithoutCheeseIngredientSauces: ${oneFoodItem['unitPriceWithoutCheeseIngredientSauces']}');
-//      print('unitPrice');
+      print('unitPrice');
       print('foodItemSize: ${oneFoodItem['foodItemSize']}');
 
       List<SauceItem>     defaultSauces = convertFireStoreSauceItemsToLocalSauceItemsList(oneFoodItem['selectedSauces']);
@@ -944,7 +881,6 @@ class ShoppingCartBloc implements Bloc {
         name:oneFoodItem['name'],
         oneFoodTypeTotalPrice:oneFoodItem['oneFoodTypeTotalPrice'],
         unitPrice:oneFoodItem['unitPrice'],
-        unitPriceWithoutCheeseIngredientSauces: oneFoodItem['unitPriceWithoutCheeseIngredientSauces'],
         foodItemSize: oneFoodItem['foodItemSize'],
       );
 
@@ -986,14 +922,11 @@ class ShoppingCartBloc implements Bloc {
       endDate:endDate,
       startDate:startDate,
       formattedOrderPlacementDate:timestamp,
-      formattedOrderPlacementDatesTimeOnly:formattedOrderPlacementDatesTimeOnly2,
+      formattedOrderPlacementDatesTimeOnly:formattedOrderPlacementDatesTimeOnly,
       orderStatus:orderStatus,
       tableNo:tableNo,
       orderType:orderType,
       orderProductionTime:orderProductionTime,
-      deliveryCost: deliveryCost2,
-      tax:          tax,
-      priceWithDelivery: priceWithDelivery2,
       documentId:documentId,
     );
 
@@ -1033,7 +966,6 @@ class ShoppingCartBloc implements Bloc {
     _devicesBlueTooth = [];
 
     _thisRestaurant= null;
-    _allCategories=[];
 
 
 
@@ -1045,12 +977,10 @@ class ShoppingCartBloc implements Bloc {
     _devicesController.sink.add(_devicesBlueTooth);
 
     _restaurantController.sink.add(_thisRestaurant);
-    _categoriesController.sink.add(_allCategories);
 
 
   }
 
-  /*
   void clearSubscriptionPayment(){
 
 
@@ -1079,8 +1009,6 @@ class ShoppingCartBloc implements Bloc {
   }
 
 
-  */
-  
 
 
   void initiateOrderTypeSingleSelectOptions()
@@ -1399,7 +1327,6 @@ class ShoppingCartBloc implements Bloc {
     _paymentTypeController.close();
     _devicesController.close();
     _restaurantController.close();
-    _categoriesController.close();
 //    _customerInformationController.close();
 //    _multiSelectForFoodController.close();
 

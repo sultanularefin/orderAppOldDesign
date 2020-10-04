@@ -76,7 +76,6 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
 
   String _currentSize;
 //  int _itemCount= 0;
-  double priceBySize = 0.0;
   double priceBasedOnCheeseSauceIngredientsSizeState = 0.0;
 
 
@@ -171,14 +170,14 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
                       .sizedFoodPrices;
 
 
-
+                  double priceByQuantityANDSize = 0.0;
                   //            priceBasedOnCheeseSauceIngredientsSizeState = oneFood.itemSize;
 
 //                  priceBasedOnCheeseSauceIngredientsSizeState = oneFood.itemPrice;
 
                   priceBasedOnCheeseSauceIngredientsSizeState =  oneFood.priceBasedOnCheeseSauceIngredientsSize;
 
-                  priceBySize = oneFood.itemPriceBasedOnSize;
+                  priceByQuantityANDSize = oneFood.itemPrice;
 
                   _currentSize = oneFood.itemSize;
 
@@ -212,17 +211,6 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
                       print('temp.selectedIngredients: ${temp.selectedIngredients}');
                       print('temp.selectedCheeseItems: ${temp.selectedCheeseItems}');
                       print('temp.selectedSauceItems:  ${temp.selectedSauceItems}');
-
-
-                      print('temp.unitPrice:  ${temp.unitPrice}');
-                      print('temp.unitPriceWithoutCheeseIngredientSauces: '
-                          ' ${temp.unitPriceWithoutCheeseIngredientSauces}');
-                      print('temp.quantity:  ${temp.quantity}');
-
-                      print('temp.foodItemSize:  ${temp.foodItemSize}');
-                      print('temp.subTotalPrice:  ${temp.subTotalPrice}');
-
-
 
 
 
@@ -624,24 +612,43 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
                                                                   );
                                                                 }
                                                                 else {
+//                    logger.e('snapshot.hasData: ${snapshot.hasData} getCurrentSelectedFoodStream');
+//                    Order incrementCurrentFoodProcessing = snapshot.data;
 
                                                                   SelectedFood incrementCurrentFoodProcessing = snapshot.data;
 
 
+//                    int lengthOfSelectedItemsLength = incrementOrderProcessing.selectedFoodListLength;
+//                    logger.e('lengthOfSelectedItemsLength: $lengthOfSelectedItemsLength');
+
                                                                   int itemCountNew;
 
 
+//                    print('incrementOrderProcessing.selectedFoodInOrder.isEmpty:'
+//                        ' ${incrementOrderProcessing.selectedFoodInOrder.isEmpty}');
                                                                   print('incrementCurrentFoodProcessing==null ${incrementCurrentFoodProcessing==null}');
 
 
+//                    if( incrementOrderProcessing.selectedFoodInOrder.isEmpty) {
+//                      itemCountNew=0;
+//
+//                    }
                                                                   if(incrementCurrentFoodProcessing==null){
                                                                     itemCountNew=0;
                                                                   }
                                                                   else {
+//                      itemCountNew = incrementOrderProcessing
+////                          .selectedFoodInOrder[lengthOfSelectedItemsLength-1]
+////                          .quantity;
                                                                     itemCountNew = incrementCurrentFoodProcessing.quantity;
                                                                   }
 
+
+
+//                    logger.e('itemCountNew: $itemCountNew');
                                                                   return Container(
+//                        color: Colors.indigoAccent,
+//                          color: Colors.yellowAccent,
                                                                     margin: EdgeInsets.symmetric(
                                                                         horizontal: 0,
                                                                         vertical: 0),
@@ -696,7 +703,6 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
                                                                                 foodItemImageURL: blocD
                                                                                     .currentFoodItem.imageURL,
                                                                                 unitPrice: priceBasedOnCheeseSauceIngredientsSizeState,
-                                                                                unitPriceWithoutCheeseIngredientSauces: priceBySize,
                                                                                 foodDocumentId: blocD
                                                                                     .currentFoodItem.documentId,
                                                                                 quantity: quantity,
@@ -731,8 +737,6 @@ class _FoodItemDetailsState extends State<FoodItemDetails2> {
                                                                                 foodItemImageURL: blocD
                                                                                     .currentFoodItem.imageURL,
                                                                                 unitPrice: priceBasedOnCheeseSauceIngredientsSizeState,
-//                                                                                unitPrice: priceBasedOnCheeseSauceIngredientsSizeState,
-                                                                                unitPriceWithoutCheeseIngredientSauces: priceBySize,
                                                                                 foodDocumentId: blocD
                                                                                     .currentFoodItem.documentId,
                                                                                 quantity: newQuantity,

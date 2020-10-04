@@ -41,7 +41,7 @@ import 'package:foodgallery/src/screens/foodGallery/foodgallery2.dart';
 import 'package:foodgallery/src/BLoC/foodGallery_bloc.dart';
 //import 'package:foodgallery/src/BLoC/foodItemDetails_bloc.dart';
 //import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 
 
 
@@ -68,14 +68,6 @@ class _WelcomePageState extends State<WelcomePage> {
   // Login Button.
   String fromWhicPage2='';
   _WelcomePageState(this.fromWhicPage2);
-
-
-//  List<NewIngredient> welcomPageIngredients;
-
-//  final logger = Logger(
-//    printer: PrettyPrinter(),
-//  );
-
 
 
   @override
@@ -139,7 +131,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
       return Navigator.push(
 
-          context, MaterialPageRoute(builder: (context) => LoginPage(showSnackbar0:true))
+          context, MaterialPageRoute(builder: (context) => LoginPage())
 
       );
     }
@@ -191,36 +183,18 @@ class _WelcomePageState extends State<WelcomePage> {
 //    logger.e('at build of welcome page');
 
     FoodItemWithDocID emptyFoodItemWithDocID = new FoodItemWithDocID();
-//    List<NewIngredient> emptyIngs = [];
-
-//    final appBloc = AppBloc(emptyFoodItemWithDocID,emptyIngs,,fromWhichPage:0);
-//    final AppBloc appBlockinWelcomePage = appBloc;
-
-
-//    final identityBlocInvokerAppBlockWelcomPageBuildMethod = BlocProvider2
-//        .of(context)
-//        .getIdentityBlocsObject;
 
 
     final identityBloc = BlocProvider.of<IdentityBloc>(context);
 
 
-//    print('width: ${MediaQuery
-//        .of(context)
-//        .size
-//        .width}');
-//    print('Height: ${MediaQuery
-//        .of(context)
-//        .size
-//        .height}');
-//
-//    print('at build of welcomePage');
+
     return Scaffold(
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
 
-        child: StreamBuilder<FirebaseUser>(
+        child: StreamBuilder<User>(
 
             stream: identityBloc.
             getCurrentFirebaseUserStream,
@@ -448,7 +422,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     break;
                     */
                   default:
-                    return (snapshot.data is FirebaseUser) ?
+                    return (snapshot.data is User) ?
 
                     /*
                     BlocProvider2(/*thisAllIngredients2:welcomPageIngredients, */

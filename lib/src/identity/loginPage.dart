@@ -1,38 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-//import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocID.dart';
-//import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
 
-//import 'package:foodgallery/src/identity/signup.dart';
-//import 'package:foodgallery/src/screens/foodGallery/foodgallery2.dart';
-//import 'package:google_fonts/google_fonts.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:foodgallery/src/identity/SignUpPage.dart';
 import 'package:foodgallery/src/welcomePage.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:logger/logger.dart';
-import './Widget/bezierContainer.dart';
-//import 'package:fluttercrud/src/screens/drawerScreen/DrawerScreenFoodGallery.dart';
-//import 'package:fluttercrud/src/screens/homeScreen/admin_firebase_food.dart';
 
+import './Widget/bezierContainer.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'dart:convert';
 
-/* bloc's  */
 
 import 'package:foodgallery/src/BLoC/bloc_provider.dart';
-//import 'package:foodgallery/src/BLoC/bloc_provider2.dart';
-//import 'package:foodgallery/src/BLoC/foodGallery_bloc.dart';
-//import 'package:foodgallery/src/BLoC/foodItemDetails_bloc.dart';
-//import 'package:foodgallery/src/BLoC/app_bloc.dart';
+
 import 'package:foodgallery/src/BLoC/identity_bloc.dart';
 
 
 class LoginPage extends StatefulWidget {
-  final bool showSnackbar0;
-  LoginPage({Key key, this.title,this.showSnackbar0}) : super(key: key);
+
+  LoginPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -40,7 +26,7 @@ class LoginPage extends StatefulWidget {
 //  _WelcomePageState createState() => _WelcomePageState(fromWhicPage);
 
   @override
-  _LoginPageState createState() => _LoginPageState(showSnackbar0);
+  _LoginPageState createState() => _LoginPageState();
 
 //  _WelcomePageState createState() => _WelcomePageState(fromWhicPage);
 }
@@ -50,8 +36,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
 
-  bool fromWhicPage1;
-  _LoginPageState(this.fromWhicPage1);
+
+  _LoginPageState();
 
 //  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   String emailState ='';
@@ -70,18 +56,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(fromWhicPage1==true){
 
-      print(': : : : : fromWhicPage1: $fromWhicPage1 condition check in login page : : : : ');
-      Scaffold.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text("You have been logged out")));
-    }
     return new Scaffold(
         key: _scaffoldKey,
 //    return Scaffold(
         body: SingleChildScrollView(
-            child: fromWhicPage1==true? Container(
+            child: Container(
               height: MediaQuery.of(context).size.height,
               child: Stack(
                 children: <Widget>[
@@ -132,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                             BlocProvider.of<IdentityBloc>(context);
 
 
-                            Future<AuthResult> userCheck=
+                            Future<UserCredential> userCheck=
                             identityBlocLoginPage.handleSignInFromLoginPage(emailState.trim(),passwordState.trim());
 
 //                            _handleSignIn();
@@ -161,19 +141,6 @@ class _LoginPageState extends State<LoginPage> {
                                         //AppBloc(emptyFoodItemWithDocID,loginPageIngredients,fromWhichPage:0),
                                         child: WelcomePage()
                                     );
-                                    /*
-                                  return BlocProvider<FoodGalleryBloc>(
-                                      bloc: FoodGalleryBloc(),
-                                      child: FoodGallery2()
-
-                                  );
-
-                                  */
-
-
-
-//                                      drawerScreen()
-
 
 
 
@@ -209,178 +176,47 @@ class _LoginPageState extends State<LoginPage> {
 
                           child:  _submitButton(),
                         ),
-                        /*
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text('Forgot Password ?',
-                              style:
-                              TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                        ),
 
-                         */
+                      Container(
+                        padding: EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have account? ",
+                              style: TextStyle(color: /*Colors.white*/ Colors.blueGrey, fontSize: 16),
+                            ),
+                            InkWell(
 
-                        /*
-                        _divider(),
-                        _facebookButton(),
-                        */
-                        test(),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(),
-                        ),
-                        /* */
-                      ],
-                    ),
-                  ),
-                  /*
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _createAccountLabel(),
-                  ),
-                  */
-                  Positioned(top: 40, left: 0, child: _backButton()),
-                  Positioned(
-                      top: -MediaQuery.of(context).size.height * .15,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer())
-                ],
-              ),
-            ) :
 
-            Container(
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: SizedBox(),
-                        ),
-                        Container(
-                            child: titleWidget()
-                        ),
-//                        _title(),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        _emailPasswordWidget(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        InkWell(
-                          onTap: (){
-                            print("login button pressed");
-//                            showDialog(
-//                                context: context,
-//                                builder: (BuildContext context) {
-//                                  return Center(child: CircularProgressIndicator(),);
-//                                });
+                                onTap: () {
 
-                            _scaffoldKey.currentState.showSnackBar(
-                                new SnackBar(duration: new Duration(seconds: 30), content:
-                                new Row(
-                                  children: <Widget>[
-                                    new CircularProgressIndicator(),
-                                    new Text("  Signing-In...",style:TextStyle(
-                                      color: Colors.white38,
-                                    ))
-                                  ],
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUpPage()));
+
+                                  // return Navigator.pushReplacement(
+                                  //     context, MaterialPageRoute(builder: (context) => ChatRoom()));
+
+
+
+                                  // widget.toggleView();
+                                },
+
+                              child: Text(
+                                  "Register now",
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontSize: 16,
+                                      decoration: TextDecoration.underline),
                                 ),
-                                )
-                            );
-                            final identityBlocLoginPage =
-                            BlocProvider.of<IdentityBloc>(context);
+                            ),
 
-
-                            Future<AuthResult> userCheck=
-                            identityBlocLoginPage.handleSignInFromLoginPage(emailState.trim(),passwordState.trim());
-
-//                            _handleSignIn();
-
-                            userCheck.whenComplete(() {
-
-                              print("called when future completes");
-
-                            }
-                            ).then((onValue){
-
-//                              FoodItemWithDocID emptyFoodItemWithDocID =new FoodItemWithDocID();
-//                              List<NewIngredient> emptyIngs = [];
-
-//                              Navigator.of(context).pop();
-
-
-                              Navigator.of(context).pushAndRemoveUntil(
-                                //        MaterialPageRoute(builder: (context) => HomeScreen())
-                                //
-                                //        MaterialPageRoute(builder: (context) => MyHomePage())
-                                  MaterialPageRoute(builder: (BuildContext context) {
-
-                                    return BlocProvider<IdentityBloc>(
-                                        bloc: IdentityBloc(),
-                                        //AppBloc(emptyFoodItemWithDocID,loginPageIngredients,fromWhichPage:0),
-                                        child: WelcomePage()
-                                    );
-                                    /*
-                                  return BlocProvider<FoodGalleryBloc>(
-                                      bloc: FoodGalleryBloc(),
-                                      child: FoodGallery2()
-
-                                  );
-
-                                  */
-
-
-
-//                                      drawerScreen()
-
-
-                                  }),(Route<dynamic> route) => false);
-
-
-
-//                            _handleSignIn();
-                            }).catchError((onError){
-                               print('LOGIN ERROR **** at onError $onError ***');
-                              _scaffoldKey.currentState.showSnackBar(
-                                new SnackBar(duration: new Duration(seconds: 6), content:Container(
-                                  child:
-                                  new Row(
-                                    children: <Widget>[
-                                      new CircularProgressIndicator(),
-                                      new Text("Error: ${onError.message.substring(0,40)}",style:
-                                      TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500,
-                                          color:Colors.white)),
-                                    ],
-                                  ),
-                                )),);
-
-                            });
-                          },
-
-                          child:  _submitButton(),
+                          ],
                         ),
-                        /*
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text('Forgot Password ?',
-                              style:
-                              TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                        ),
+                      ),
 
-                         */
-
-                        /*
-                        _divider(),
-                        _facebookButton(),
-                        */
                         Expanded(
                           flex: 2,
                           child: SizedBox(),
@@ -403,7 +239,9 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             )
-        )
+
+
+    ),
     );
   }
   void setEmailState( text) {
@@ -605,10 +443,6 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
-    Widget test() {
-      return Text('you are logged out',
-        style: TextStyle(color: Colors.red, fontSize: 40),);
-    }
 
 
 

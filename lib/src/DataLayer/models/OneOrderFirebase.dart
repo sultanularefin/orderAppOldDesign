@@ -20,10 +20,7 @@ class OneOrderFirebase {
   String                    tableNo;
   String                    orderType;
   String                    documentId;
-  double                    deliveryCost;
-  double                    tax; // 14% upon total Cost.
-  double                    priceWithDelivery;
-  int                       orderProductionTime;
+  int                    orderProductionTime;
 
   OneOrderFirebase(
       {
@@ -43,9 +40,6 @@ class OneOrderFirebase {
         this.tableNo,
         this.orderType,
         this.documentId,
-        this.deliveryCost,
-        this.tax, // 14% upon total Cost.
-        this.priceWithDelivery,
         this.orderProductionTime, //  int minutes3 =minutes2.ceil(); // no need to have double
       }
       );

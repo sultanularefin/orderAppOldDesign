@@ -15,7 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Image;
 //import 'package:image/image.dart';
 import 'package:flutter/services.dart'; // InputFormatters.
-import 'package:flutter/widgets.dart';
 import 'package:foodgallery/src/BLoC/foodGallery_bloc.dart';
 import 'package:foodgallery/src/BLoC/identity_bloc.dart';
 import 'package:foodgallery/src/DataLayer/models/CheeseItem.dart';
@@ -164,8 +163,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
   bool loadingState = false;
   Timer _timer;
-
-  // Set<String> categories ={}; // for Recite dummy Print
 
 
   /*
@@ -9340,6 +9337,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
+
+
                 onPressed: () async {
 
                   // Delivery Phone Recite Print.
@@ -9464,6 +9463,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   }
 
                 },
+
+
                 // ---
               ),
             ),
@@ -9515,8 +9516,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
               String borderColor = selectedOne.borderColor;
               const Color OrderTypeIconColor = Color(0xff070707);
 
-
-              print('unObsecuredInputandPayment.totalPrice: ${unObsecuredInputandPayment.totalPrice}');
 
               return Container(
                 child: Column(
@@ -11317,17 +11316,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
     );
   }
 
-
-
-
-
-// DUMMY RECITE RELATED PRINT CODES ARE HERE ==> LINE # 11264 ==>
-
 //  showExtraIngredients(oneFood.selectedIngredients)
 //  showExtraCheeseItems(oneFood.selectedCheeses)
 //  showExtraSauces(oneFood.defaultSauces)
 
-  Widget showExtraIngredients(List <NewIngredient> reciteIngrdients,int quantity){
+  Widget showExtraIngredients(List <NewIngredient> reciteIngrdients){
 
     print('reciteIngrdients.length: ${reciteIngrdients.length}');
     return ListView.builder(
@@ -11339,13 +11332,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
       itemBuilder: (_,int index) {
-        return displayOneExtraIngredientInRecite(reciteIngrdients[index], index,quantity);
+        return displayOneExtraIngredientInRecite(reciteIngrdients[index], index);
       },
 
     );
 
   }
-  Widget showExtraCheeseItems(List<CheeseItem> reciteCheeseItems,int quantity){
+  Widget showExtraCheeseItems(List<CheeseItem> reciteCheeseItems){
     print('reciteCheeseItems.length: ${reciteCheeseItems.length}');
     return ListView.builder(
 
@@ -11355,11 +11348,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
       itemCount: reciteCheeseItems.length,
 
       itemBuilder: (_,int index) {
-        return displayOneExtraCheeseItemInRecite(reciteCheeseItems[index], index,quantity);
+        return displayOneExtraCheeseItemInRecite(reciteCheeseItems[index], index);
       },
     );
   }
-  Widget showExtraSauces(List<SauceItem> reciteSauceItems,int quantity){
+  Widget showExtraSauces(List<SauceItem> reciteSauceItems){
     print('reciteSauceItems.length: ${reciteSauceItems.length}');
     return ListView.builder(
 
@@ -11369,14 +11362,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
       itemCount: reciteSauceItems.length,
 
       itemBuilder: (_,int index) {
-        return displayOneExtraSauceItemInRecite(reciteSauceItems[index], index,quantity);
+        return displayOneExtraSauceItemInRecite(reciteSauceItems[index], index);
       },
     );
   }
 
-
-
-  Widget displayOneExtraIngredientInRecite(NewIngredient oneIngredientForRecite, int index,int quantity){
+  Widget displayOneExtraIngredientInRecite(NewIngredient oneIngredientForRecite, int index){
 
     print('oneIngredientForRecite.ingredientName: ${oneIngredientForRecite.ingredientName}');
 
@@ -11390,8 +11381,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
           children: <Widget>[
 
             Text(
-//              '+SauceItem: $quantity'+'X',
-              '+Ingre.: $quantity'+'X',
+              '+Ingre.: ',
 
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -11418,7 +11408,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 fontSize: 17, fontFamily: 'Itim-Regular',),
             ),
             Text(
-              '  +${(oneIngredientForRecite.price *quantity).toStringAsFixed(2)}',
+              '  +${oneIngredientForRecite.price.toStringAsFixed(2)}',
 
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -11438,7 +11428,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
     );
   }
 
-  Widget displayOneExtraSauceItemInRecite(SauceItem oneSauceItemForRecite, int index,int quantity){
+  Widget displayOneExtraSauceItemInRecite(SauceItem oneSauceItemForRecite, int index){
 
     print('oneSauceItemForRecite.ingredientName: ${oneSauceItemForRecite.sauceItemName}');
 
@@ -11452,7 +11442,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
           children: <Widget>[
 
             Text(
-              '+SauceItem: $quantity'+'X',
+              '+SauceItem: ',
 
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -11480,7 +11470,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 fontSize: 20, fontFamily: 'Itim-Regular',),
             ),
             Text(
-              '  +${(oneSauceItemForRecite.price * quantity).toStringAsFixed(2)}',
+              '  +${oneSauceItemForRecite.price.toStringAsFixed(2)}',
 
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -11501,7 +11491,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
   }
 
 
-  Widget displayOneExtraCheeseItemInRecite(CheeseItem oneCheeseItemForRecite, int index,int quantity){
+  Widget displayOneExtraCheeseItemInRecite(CheeseItem oneCheeseItemForRecite, int index){
 
     print('oneCheeseItemForRecite.ingredientName: ${oneCheeseItemForRecite.cheeseItemName}');
     if(oneCheeseItemForRecite.isDefaultSelected !=true) {
@@ -11514,8 +11504,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
           children: <Widget>[
 
             Text(
-              '+cheese: $quantity'+'X',
-//              '+Ingre.: $quantity'+'X',
+              '+cheese: ',
 
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -11558,7 +11547,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
             */
             Text(
-              '  +${(oneCheeseItemForRecite.price * quantity).toStringAsFixed(2)}',
+              '  +${oneCheeseItemForRecite.price.toStringAsFixed(2)}',
 
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -11611,61 +11600,18 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
     */
 
-
-
-
-
-
-
-
-
-//    List<String> categories = [];
-//    orderedItems.forEach((oneFood) {
-//
-//
-//      if((categories==null) || (categories.length==0) || (categories.contains(oneFood.category)==false) ) {
-//        ticket.text('${oneFood.category.toString()}',
-//            styles: PosStyles(
-//              height: PosTextSize.size1,
-//              width: PosTextSize.size1,
-//              bold: true,
-//              align: PosAlign.center,
-//            )
-//        );
-//      }
-//
-//      categories.add(oneFood.category);
-
-//    List<String> categories = [];
-
-
     return Container(
 
       height:940,
-      width: 350,
+      width: 220,
 
       child: Column(
         children: <Widget>[
 
 
           Container(
-            height: 50,
-            width: 350,
-            alignment: Alignment.center,
-            child: Text(
-              '${oneFood.category.toString()}',
-
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-//                        color: Color(0xffF50303),
-                fontSize: 20, fontFamily: 'Itim-Regular',),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 350,
+            height: 100,
+            width: 220,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -11698,8 +11644,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
           Container(
-            height: 50,
-            width: 350,
+            height: 100,
+            width: 220,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -11716,8 +11662,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                     fontSize: 20, fontFamily: 'Itim-Regular',),
                 ),
                 Text(
-                  '${(oneFood.unitPriceWithoutCheeseIngredientSauces * oneFood.quantity).toStringAsFixed(2)}',
-                  // '${oneFood.unitPriceWithoutCheeseIngredientSauces.toStringAsFixed(2)}',
+                  '${oneFood.oneFoodTypeTotalPrice.toStringAsFixed(2)}',
 
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -11736,14 +11681,14 @@ class _ShoppingCartState extends State<ShoppingCart> {
           Container(
             height:700,
             color:Colors.redAccent,
-            padding:const EdgeInsets.symmetric(horizontal: 10,vertical: 0),
+            padding:const EdgeInsets.all(3),
             child:ListView(
               children: <Widget>[
                 Container(
-                    width: 350,
+                    width: 340,
                     height:210,
                     color:Colors.blue,
-                    child: showExtraIngredients(onlyExtraIngredient,oneFood.quantity)),
+                    child: showExtraIngredients(onlyExtraIngredient)),
 
 
 
@@ -11754,10 +11699,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   color:Colors.black,
                 ),
                 Container(
-                    width: 350,
+                    width: 340,
                     height:210,
                     color:Colors.orange,
-                    child: showExtraCheeseItems(onlyExtraCheeseItems,oneFood.quantity)
+                    child: showExtraCheeseItems(onlyExtraCheeseItems)
                 ),
 
                 Divider(
@@ -11767,11 +11712,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   color:Colors.black,
                 ),
                 Container(
-                    width: 350,
+                    width: 320,
 
                     height:210,
                     color:Colors.deepPurpleAccent,
-                    child: showExtraSauces(onlyExtraSauces,oneFood.quantity)
+                    child: showExtraSauces(onlyExtraSauces)
                 ),
 
 
@@ -11854,30 +11799,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   color:Colors.black,
                 ),
 
-
-                Container(
-                  child:
-
-                  // 2 ends here.
-                  Text('Order No: from F.S. Cloud Function',
-
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-//                        color: Color(0xffF50303),
-                      fontSize: 20, fontFamily: 'Itim-Regular',),
-                  ),
-
-                ),
-
-                Divider(
-                  height:10,
-                  thickness:5,
-                  color:Colors.black,
-                ),
-
-
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -11909,26 +11830,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   ),
                 ),
 
-                Container(
-                  child:
-
-                      // 2 ends here.
-                      Text('${oneOrderForReceipt.formattedOrderPlacementDate}',
-
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-//                        color: Color(0xffF50303),
-                          fontSize: 20, fontFamily: 'Itim-Regular',),
-                      ),
-
-                ),
-
-
-                SizedBox(
-                  height: 10,
-                ),
 
 
 
@@ -12036,7 +11937,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
                 Container(
-                    width: 350,
+                    width: 220,
                     height:580,
                     child: processFoodForRecite(orderedItems)
                 ),
@@ -12101,38 +12002,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                           fontSize: 26, fontFamily: 'Itim-Regular',),
                       ),
                       Text(
-                        '${oneOrderForReceipt.deliveryCost.toStringAsFixed(2)}',
-
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-//                        color: Color(0xffF50303),
-                          fontSize: 20, fontFamily: 'Itim-Regular',),
-                      ),
-
-                    ],
-                  ),
-                ),
-
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-
-                      Text(
-                        'ALV: ',
-
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-//                        color: Color(0xffF50303),
-                          fontSize: 26, fontFamily: 'Itim-Regular',),
-                      ),
-                      Text(
-                        '${oneOrderForReceipt.tax.toStringAsFixed(2)}',
+                        '${1.6.toStringAsFixed(2)}',
 
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -12162,10 +12032,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
 //                        color: Color(0xffF50303),
                           fontSize: 30, fontFamily: 'Itim-Regular',),
                       ),
-
-                      // TODO: PROBLEM CODE NEEDS CHECKING....
                       Text(
-                        '${(oneOrderForReceipt.priceWithDelivery).toStringAsFixed(2)}',
+                        '${(oneOrderForReceipt.totalPrice +1.6).toStringAsFixed(2)}',
 
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -12357,16 +12225,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
   }
 
 
-  String sanitize(String nameInput) {
-//    String nameInput2 = nameInput.replaceAll(new RegExp(r'e'), 'é');
-//
-//    print(nameInput2);
+  String sanitize(String nameInput){
 
-    String nameInput3 = nameInput.replaceAll(new RegExp(r"'"), "\'");
-
-    print(nameInput3);
-
-    return nameInput3;
+    return nameInput;
   }
 
   /*
@@ -12492,9 +12353,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
     ticket.image(oneImageRestaurant);
 
     ticket.feed(1);
-    ticket.hr(ch:'=',len:null,linesAfter:1);
+    ticket.hr(ch:'=',len:null,linesAfter:0);
 
-    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}'+'                 '
+    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}'+'           '
         +'${oneOrderData3.orderProductionTime} min',
         styles: PosStyles(
           height: PosTextSize.size1,
@@ -12507,11 +12368,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
     //    ticket.feed(2);
 
 
+    // FOR TAKEAWAY NOT NECESSARY..
+    /*
     // 3 ... address: .... + flat
 
-    /*
 
-    ticket.text('address: ${((customerForReciteGeneration.address == null) ||
+    ticket.text('address:  ${((customerForReciteGeneration.address == null) ||
         (customerForReciteGeneration.address.length == 0)) ?
     '----' : customerForReciteGeneration.address.length > 21 ?
     customerForReciteGeneration.address.substring(0, 18) + '...' :
@@ -12525,7 +12387,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
     );
 
     // 4 ... phone: phone
-    ticket.text('phone: ${((customerForReciteGeneration.phoneNumber == null) ||
+    ticket.text('phone:  ${((customerForReciteGeneration.phoneNumber == null) ||
         (customerForReciteGeneration.phoneNumber.length == 0)) ?
     '----' : customerForReciteGeneration.phoneNumber.length > 21 ?
     customerForReciteGeneration.phoneNumber.substring(0, 18) + '...' :
@@ -12537,35 +12399,17 @@ class _ShoppingCartState extends State<ShoppingCart> {
           align: PosAlign.left,
         ));
 
+    */
+
 
     ticket.feed(1);
-
-    */
-    ticket.hr(ch:'.',len:null,linesAfter:0);
+    ticket.hr(ch:'.',len:null,linesAfter:1);
 
     // 5... processFoodForRecite
 
 
-    Set<String> categories ={};
-
-//    List<String> categories = [];
     orderedItems.forEach((oneFood) {
 
-
-      if((categories==null) || (categories.length==0) || (categories.contains(oneFood.category)==false) ) {
-        ticket.text('${oneFood.category.toString()}',
-            styles: PosStyles(
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-              bold: true,
-              align: PosAlign.center,
-            )
-        );
-      }
-
-      categories.add(oneFood.category);
-
-      ticket.feed(1);
 
       List<NewIngredient> extraIngredient   = oneFood.selectedIngredients;
       List<SauceItem>     extraSauces       = oneFood.selectedSauces;
@@ -12590,13 +12434,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
-
-
       // 5.... (name and quantity) + (size and price )
       ticket.row([
 
 
-        PosColumn(text: '${sanitize(oneFood.name)}',
+        PosColumn(text: '${oneFood.name.toString()}',
             width: 5, styles: PosStyles(align: PosAlign.left,
             ) ),
         PosColumn(text: '',
@@ -12616,7 +12458,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
             width: 5,  styles: PosStyles(align: PosAlign.left) ),
         PosColumn(text: '',
           width: 2, /*,styles: PosStyles(align: PosAlign.left) */),
-        PosColumn(text: '${oneFood.unitPriceWithoutCheeseIngredientSauces.toStringAsFixed(2)}',
+        PosColumn(text: '${oneFood.oneFoodTypeTotalPrice.toStringAsFixed(2)}',
             width: 5,styles: PosStyles(
 
               align: PosAlign.right,
@@ -12637,11 +12479,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneIngredientForRecite.ingredientName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneIngredientForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right)),
+                width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -12661,11 +12503,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneSauceItemForRecite.sauceItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneSauceItemForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right) ),
+                width: 3,styles: PosStyles(align: PosAlign.left) ),
 
 
           ]);
@@ -12685,11 +12527,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneCheeseItemForRecite.cheeseItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneCheeseItemForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right)),
+                width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -12712,13 +12554,15 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '${oneOrderData3.totalPrice.toStringAsFixed(2)}',
-          width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+          width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
 
-    /*
 
+
+    // for takeaway and delivery not necessary.
+    /*
     ticket.row([
 
 
@@ -12727,9 +12571,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
       PosColumn(text: '${00.toStringAsFixed(2)}',
-          width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+          width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
+
     */
 
 //    ticket.hr();
@@ -12748,8 +12593,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
 
 
-      PosColumn(text: '${oneOrderData3.totalPrice.toStringAsFixed(2)}',
-        styles:PosStyles(bold: true,align: PosAlign.right,codeTable: PosCodeTable.westEur),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+        styles:PosStyles(bold: true,align: PosAlign.right)  ,
         width: 5,),
 
     ]);
@@ -12808,15 +12653,14 @@ class _ShoppingCartState extends State<ShoppingCart> {
     return ticket;
 
 
-
-  }
-
+    }
 
 
 
 
 
-// # number 2: demoReceipt Order Type Delivery begins here...
+
+  // # number 2: demoReceipt Order Type Delivery begins here...
 
 //  restaurantNameImageBytes,totalCostDeliveryBytes2
   Future<Ticket> demoReceiptOrderTypeDelivery(
@@ -12877,6 +12721,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
+
+
+
     //differentImages 3 =>  deliveryDataBytesImage
     final ByteData deliveryData = await rootBundle.load('assets/orderBYicons/delivery.png');
     final Uint8List deliveryDataBytes = deliveryData.buffer.asUint8List();
@@ -12919,28 +12766,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
     //    final ImageAliasAnotherSource
     //        .Image oneImageRestaurant = Image.memory(restaurantNameBytesNotFuture3);
 
-
     ticket.image(oneImageRestaurant);
+
     ticket.feed(1);
     ticket.hr(ch:'=',len:null,linesAfter:0);
 
-    ticket.text('Order No: from F.S. Cloud Function',
-        styles: PosStyles(
-          height: PosTextSize.size1,
-          width: PosTextSize.size1,
-          bold: true,
-          align: PosAlign.center,
-        )
-    );
-
-    ticket.hr(ch:'=',len:null,linesAfter:1);
-
-//    Order No: Cloud Function generated..
-
-
-
-    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}' + '                '
-
+    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}'+'           '
         +'${oneOrderData3.orderProductionTime} min',
         styles: PosStyles(
           height: PosTextSize.size1,
@@ -12950,20 +12781,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
         )
     );
 
-    ticket.text('date: ${oneOrderData3.formattedOrderPlacementDate}',
-        styles: PosStyles(
-          height: PosTextSize.size1,
-          width: PosTextSize.size1,
-          bold:true,
-          align: PosAlign.left,
-        )
-    );
+    //    ticket.feed(2);
 
-//    ticket.feed(1);
+
     // 3 ... address: .... + flat
 
 
-    ticket.text('address: ${((customerForReciteGeneration.address == null) ||
+    ticket.text('address:  ${((customerForReciteGeneration.address == null) ||
     (customerForReciteGeneration.address.length == 0)) ?
     '----' : customerForReciteGeneration.address.length > 21 ?
     customerForReciteGeneration.address.substring(0, 18) + '...' :
@@ -12977,7 +12801,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
     );
 
     // 4 ... phone: phone
-    ticket.text('phone: ${((customerForReciteGeneration.phoneNumber == null) ||
+    ticket.text('phone:  ${((customerForReciteGeneration.phoneNumber == null) ||
         (customerForReciteGeneration.phoneNumber.length == 0)) ?
     '----' : customerForReciteGeneration.phoneNumber.length > 21 ?
     customerForReciteGeneration.phoneNumber.substring(0, 18) + '...' :
@@ -12991,32 +12815,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
     ticket.feed(1);
-    ticket.hr(ch:'.',len:null,linesAfter:0);
+    ticket.hr(ch:'.',len:null,linesAfter:1);
 
     // 5... processFoodForRecite
 
 
-    Set<String> categories ={};
-
-//    List<String> categories = [];
     orderedItems.forEach((oneFood) {
 
-
-      if((categories==null) || (categories.length==0) || (categories.contains(oneFood.category)==false) ) {
-        ticket.text('${oneFood.category.toString()}',
-            styles: PosStyles(
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-              bold: true,
-              align: PosAlign.center,
-            )
-        );
-      }
-
-      categories.add(oneFood.category);
-
-
-      ticket.feed(1);
 
       List<NewIngredient> extraIngredient   = oneFood.selectedIngredients;
       List<SauceItem>     extraSauces       = oneFood.selectedSauces;
@@ -13041,13 +12846,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
-
-
       // 5.... (name and quantity) + (size and price )
       ticket.row([
 
 
-        PosColumn(text: '${sanitize(oneFood.name)}',
+        PosColumn(text: '${oneFood.name.toString()}',
           width: 5, styles: PosStyles(align: PosAlign.left,
       ) ),
         PosColumn(text: '',
@@ -13067,7 +12870,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
           width: 5,  styles: PosStyles(align: PosAlign.left) ),
         PosColumn(text: '',
           width: 2, /*,styles: PosStyles(align: PosAlign.left) */),
-        PosColumn(text: '${(oneFood.unitPriceWithoutCheeseIngredientSauces * oneFood.quantity).toStringAsFixed(2)}',
+        PosColumn(text: '${oneFood.oneFoodTypeTotalPrice.toStringAsFixed(2)}',
           width: 5,styles: PosStyles(
 
               align: PosAlign.right,
@@ -13088,11 +12891,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
           oneIngredientForRecite.ingredientName}',
               width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneIngredientForRecite.price.toStringAsFixed(2)}',
-              width: 3,styles: PosStyles(align: PosAlign.right)),
+              width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -13112,11 +12915,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneSauceItemForRecite.sauceItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneSauceItemForRecite.price.toStringAsFixed(2)}',
-              width: 3,styles: PosStyles(align: PosAlign.right) ),
+              width: 3,styles: PosStyles(align: PosAlign.left) ),
 
 
           ]);
@@ -13136,11 +12939,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneCheeseItemForRecite.cheeseItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneCheeseItemForRecite.price.toStringAsFixed(2)}',
-              width: 3,styles: PosStyles(align: PosAlign.right)),
+              width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -13163,8 +12966,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '${oneOrderData3.totalPrice.toStringAsFixed(2)}',
-        width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+        width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
 
@@ -13176,25 +12979,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '${oneOrderData3.deliveryCost.toStringAsFixed(2)}',
-        width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+      PosColumn(text: '\$${00.toStringAsFixed(2)}',
+        width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
-
-
-    ticket.row([
-
-
-      PosColumn(text: 'ALV',
-        width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
-      PosColumn(text: '',
-        width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '14%',
-          width: 5,styles:PosStyles(align: PosAlign.right)),
-
-    ]);
-
-
 
 //    ticket.hr();
 
@@ -13212,8 +13000,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
 
 
-      PosColumn(text: '${oneOrderData3.priceWithDelivery.toStringAsFixed(2)}',
-        styles:PosStyles(bold: true,align: PosAlign.right,codeTable: PosCodeTable.westEur),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+        styles:PosStyles(bold: true,align: PosAlign.right)  ,
         width: 5,),
 
     ]);
@@ -13266,7 +13054,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 //    ticket.hr();
     // needed. as per design.
 
-    ticket.feed(1); // for holding or touching the recite by finger... space.
+    ticket.feed(1); // for holding or touching the recite by finger... space..
 
     ticket.cut();
     return ticket;
@@ -13373,6 +13161,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
+
+
     //  printing begins::: //1.... starts...
 
     //1... RESTAURANT NAME DONE...
@@ -13386,9 +13176,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
     ticket.image(oneImageRestaurant);
 
     ticket.feed(1);
-    ticket.hr(ch:'=',len:null,linesAfter:1);
+    ticket.hr(ch:'=',len:null,linesAfter:0);
 
-    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}'+'                 '
+    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}'+'           '
         +'${oneOrderData3.orderProductionTime} min',
         styles: PosStyles(
           height: PosTextSize.size1,
@@ -13403,9 +13193,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
     // 3 ... address: .... + flat
 
-
+    // FOR PHONE ORDER NOT NECESSARY...
     /*
-    ticket.text('address: ${((customerForReciteGeneration.address == null) ||
+
+    ticket.text('address:  ${((customerForReciteGeneration.address == null) ||
         (customerForReciteGeneration.address.length == 0)) ?
     '----' : customerForReciteGeneration.address.length > 21 ?
     customerForReciteGeneration.address.substring(0, 18) + '...' :
@@ -13417,10 +13208,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
           align: PosAlign.left,
         )
     );
+
     */
 
     // 4 ... phone: phone
-    ticket.text('phone: ${((customerForReciteGeneration.phoneNumber == null) ||
+    ticket.text('phone:  ${((customerForReciteGeneration.phoneNumber == null) ||
         (customerForReciteGeneration.phoneNumber.length == 0)) ?
     '----' : customerForReciteGeneration.phoneNumber.length > 21 ?
     customerForReciteGeneration.phoneNumber.substring(0, 18) + '...' :
@@ -13434,31 +13226,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
     ticket.feed(1);
-    ticket.hr(ch:'.',len:null,linesAfter:0);
+    ticket.hr(ch:'.',len:null,linesAfter:1);
 
     // 5... processFoodForRecite
 
 
-    Set<String> categories ={};
-
-//    List<String> categories = [];
     orderedItems.forEach((oneFood) {
-
-
-      if((categories==null) || (categories.length==0) || (categories.contains(oneFood.category)==false) ) {
-        ticket.text('${oneFood.category.toString()}',
-            styles: PosStyles(
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-              bold: true,
-              align: PosAlign.center,
-            )
-        );
-      }
-
-      categories.add(oneFood.category);
-      ticket.feed(1);
-
 
 
       List<NewIngredient> extraIngredient   = oneFood.selectedIngredients;
@@ -13484,13 +13257,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
-
-
       // 5.... (name and quantity) + (size and price )
       ticket.row([
 
 
-        PosColumn(text: '${sanitize(oneFood.name)}',
+        PosColumn(text: '${oneFood.name.toString()}',
             width: 5, styles: PosStyles(align: PosAlign.left,
             ) ),
         PosColumn(text: '',
@@ -13510,7 +13281,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
             width: 5,  styles: PosStyles(align: PosAlign.left) ),
         PosColumn(text: '',
           width: 2, /*,styles: PosStyles(align: PosAlign.left) */),
-        PosColumn(text: '${oneFood.unitPriceWithoutCheeseIngredientSauces.toStringAsFixed(2)}',
+        PosColumn(text: '${oneFood.oneFoodTypeTotalPrice.toStringAsFixed(2)}',
             width: 5,styles: PosStyles(
 
               align: PosAlign.right,
@@ -13531,11 +13302,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneIngredientForRecite.ingredientName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneIngredientForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right)),
+                width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -13555,11 +13326,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneSauceItemForRecite.sauceItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneSauceItemForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right) ),
+                width: 3,styles: PosStyles(align: PosAlign.left) ),
 
 
           ]);
@@ -13579,11 +13350,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneCheeseItemForRecite.cheeseItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneCheeseItemForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right)),
+                width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -13606,13 +13377,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '${oneOrderData3.totalPrice.toStringAsFixed(2)}',
-          width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+          width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
 
 
-    /*
     ticket.row([
 
 
@@ -13620,12 +13390,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '${00.toStringAsFixed(2)}',
-          width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+      PosColumn(text: '\$${00.toStringAsFixed(2)}',
+          width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
-
-    */
 
 //    ticket.hr();
 
@@ -13643,8 +13411,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
 
 
-      PosColumn(text: '${oneOrderData3.totalPrice.toStringAsFixed(2)}',
-        styles:PosStyles(bold: true,align: PosAlign.right,codeTable: PosCodeTable.westEur),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+        styles:PosStyles(bold: true,align: PosAlign.right)  ,
         width: 5,),
 
     ]);
@@ -13701,6 +13469,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
     ticket.cut();
     return ticket;
+
 
   }
 
@@ -13807,6 +13576,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
+    //0.... printing codes starts here..
+
 
     //  printing begins::: //1.... starts...
 
@@ -13821,9 +13592,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
     ticket.image(oneImageRestaurant);
 
     ticket.feed(1);
-    ticket.hr(ch:'=',len:null,linesAfter:1);
+    ticket.hr(ch:'=',len:null,linesAfter:0);
 
-    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}'+'                 '
+    ticket.text('${oneOrderData3.formattedOrderPlacementDatesTimeOnly}'+'           '
         +'${oneOrderData3.orderProductionTime} min',
         styles: PosStyles(
           height: PosTextSize.size1,
@@ -13836,11 +13607,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
     //    ticket.feed(2);
 
 
+    // FOR TAKEAWAY NOT NECESSARY..
+    /*
     // 3 ... address: .... + flat
 
-    /*
 
-    ticket.text('address: ${((customerForReciteGeneration.address == null) ||
+    ticket.text('address:  ${((customerForReciteGeneration.address == null) ||
         (customerForReciteGeneration.address.length == 0)) ?
     '----' : customerForReciteGeneration.address.length > 21 ?
     customerForReciteGeneration.address.substring(0, 18) + '...' :
@@ -13854,7 +13626,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
     );
 
     // 4 ... phone: phone
-    ticket.text('phone: ${((customerForReciteGeneration.phoneNumber == null) ||
+    ticket.text('phone:  ${((customerForReciteGeneration.phoneNumber == null) ||
         (customerForReciteGeneration.phoneNumber.length == 0)) ?
     '----' : customerForReciteGeneration.phoneNumber.length > 21 ?
     customerForReciteGeneration.phoneNumber.substring(0, 18) + '...' :
@@ -13866,35 +13638,17 @@ class _ShoppingCartState extends State<ShoppingCart> {
           align: PosAlign.left,
         ));
 
+    */
+
 
     ticket.feed(1);
-
-    */
-    ticket.hr(ch:'.',len:null,linesAfter:0);
+    ticket.hr(ch:'.',len:null,linesAfter:1);
 
     // 5... processFoodForRecite
 
 
-    Set<String> categories ={};
-
-//    List<String> categories = [];
     orderedItems.forEach((oneFood) {
 
-
-      if((categories==null) || (categories.length==0) || (categories.contains(oneFood.category)==false) ) {
-        ticket.text('${oneFood.category.toString()}',
-            styles: PosStyles(
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-              bold: true,
-              align: PosAlign.center,
-            )
-        );
-      }
-
-      categories.add(oneFood.category);
-
-      ticket.feed(1);
 
       List<NewIngredient> extraIngredient   = oneFood.selectedIngredients;
       List<SauceItem>     extraSauces       = oneFood.selectedSauces;
@@ -13919,13 +13673,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
 
 
-
-
       // 5.... (name and quantity) + (size and price )
       ticket.row([
 
 
-        PosColumn(text: '${sanitize(oneFood.name)}',
+        PosColumn(text: '${oneFood.name.toString()}',
             width: 5, styles: PosStyles(align: PosAlign.left,
             ) ),
         PosColumn(text: '',
@@ -13945,7 +13697,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
             width: 5,  styles: PosStyles(align: PosAlign.left) ),
         PosColumn(text: '',
           width: 2, /*,styles: PosStyles(align: PosAlign.left) */),
-        PosColumn(text: '${oneFood.unitPriceWithoutCheeseIngredientSauces.toStringAsFixed(2)}',
+        PosColumn(text: '${oneFood.oneFoodTypeTotalPrice.toStringAsFixed(2)}',
             width: 5,styles: PosStyles(
 
               align: PosAlign.right,
@@ -13966,11 +13718,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneIngredientForRecite.ingredientName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneIngredientForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right)),
+                width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -13990,11 +13742,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneSauceItemForRecite.sauceItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneSauceItemForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right) ),
+                width: 3,styles: PosStyles(align: PosAlign.left) ),
 
 
           ]);
@@ -14014,11 +13766,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
             oneCheeseItemForRecite.cheeseItemName}',
                 width: 9,styles: PosStyles(
 
-                  align: PosAlign.left,
+                  align: PosAlign.right,
                 )),
 
             PosColumn(text: ' ${oneCheeseItemForRecite.price.toStringAsFixed(2)}',
-                width: 3,styles: PosStyles(align: PosAlign.right)),
+                width: 3,styles: PosStyles(align: PosAlign.left)),
 
 
           ]);
@@ -14041,13 +13793,15 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '${oneOrderData3.totalPrice.toStringAsFixed(2)}',
-          width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+          width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
 
-    /*
 
+
+    // for takeaway and delivery not necessary.
+    /*
     ticket.row([
 
 
@@ -14055,10 +13809,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 5, /*,styles: PosStyles(align: PosAlign.left) */),
       PosColumn(text: '',
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
-      PosColumn(text: '${00.toStringAsFixed(2)}',
-          width: 5,styles:PosStyles(align: PosAlign.right,codeTable: PosCodeTable.westEur)),
+      PosColumn(text: '${00.toStringAsFixed(2)}\€',
+          width: 5,styles:PosStyles(align: PosAlign.right)),
 
     ]);
+
     */
 
 //    ticket.hr();
@@ -14077,8 +13832,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
         width: 2, /*, styles: PosStyles(align: PosAlign.center) */),
 
 
-      PosColumn(text: '${oneOrderData3.totalPrice.toStringAsFixed(2)}',
-        styles:PosStyles(bold: true,align: PosAlign.right,codeTable: PosCodeTable.westEur),
+      PosColumn(text: '\$${oneOrderData3.totalPrice.toStringAsFixed(2)}',
+        styles:PosStyles(bold: true,align: PosAlign.right)  ,
         width: 5,),
 
     ]);

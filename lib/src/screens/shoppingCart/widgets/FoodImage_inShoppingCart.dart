@@ -10,8 +10,6 @@ import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
 
 //LOCAL RESOURCES
 import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
-import 'package:logger/logger.dart';
-
 
 class FoodImageInShoppingCart extends StatelessWidget {
 
@@ -34,13 +32,6 @@ class FoodImageInShoppingCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    var logger = Logger(
-      printer: PrettyPrinter(),
-    );
-
-
-    logger.e('price for one food Item ==> : $price');
 
 //    final List<String, dynamic> foodSizePrice = oneFood
 //        .sizedFoodPrices;

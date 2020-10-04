@@ -23,8 +23,7 @@ class SelectedFood {
 
   final String  foodItemName;      // one of foodItems> collection.
   final String  foodItemImageURL;
-  double  unitPrice;
-  double  unitPriceWithoutCheeseIngredientSauces;
+  final double  unitPrice;
   final String  foodDocumentId;
   int           quantity;
   final String  foodItemSize;
@@ -44,7 +43,6 @@ class SelectedFood {
         this.foodItemName,
         this.foodItemImageURL,
         this.unitPrice,
-        this.unitPriceWithoutCheeseIngredientSauces,
         this.foodDocumentId,
         this.quantity,
         this.foodItemSize,

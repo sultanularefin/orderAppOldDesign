@@ -2,7 +2,7 @@
 
 //### EXTERNAL PACKAGES
 import 'dart:async';
-import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
+
 //import 'package:logger/logger.dart';
 
 
@@ -48,7 +48,7 @@ class IdentityBloc implements Bloc {
 
 //  List<Order> _curretnOrder = [];
 
-  FirebaseUser _currentFBUser;
+  User _currentFBUser;
 
   //  Order _curretnOrder ;
   //  List<OrderTypeSingleSelect> _orderType;
@@ -56,20 +56,20 @@ class IdentityBloc implements Bloc {
 
 
 //  List<Order> get getCurrentOrder => _curretnOrder;
-  FirebaseUser get getCurrentFirebaseUser => _currentFBUser;
+  User get getCurrentFirebaseUser => _currentFBUser;
 
 //  List<OrderTypeSingleSelect> get getCurrentOrderType => _orderType;
 //  CustomerInformation get getCurrentCustomerInfo => _oneCustomerInfo;
 
 
-  final _firebaseUserController = StreamController <FirebaseUser>();
+  final _firebaseUserController = StreamController <User>();
 
 //  final _orderTypeController = StreamController <List<OrderTypeSingleSelect>>.broadcast();
 //  final _orderTypeController = StreamController <List<OrderTypeSingleSelect>>.broadcast();
 //  final _customerInformationController = StreamController <CustomerInformation>();
 //  final _customerInformationController = StreamController <CustomerInformation>.broadcast();
 
-  Stream<FirebaseUser> get getCurrentFirebaseUserStream =>
+  Stream<User> get getCurrentFirebaseUserStream =>
       _firebaseUserController.stream;
 
 //  Future<FirebaseUser> get getCurrentFirebaseUserStream =>
@@ -107,27 +107,82 @@ class IdentityBloc implements Bloc {
 
 
 
+  Future<UserCredential> signUpWithEmailAndPassword(String email,
+      String password) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email.trim(),
+          password: password.trim());
+
+      print('result: $result');
+      User user = result.user;
+      // return _userFromFirebaseUser(user);
+
+      return result;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 // CONSTRUCTOR ENDS HERE.
 
-  Future<AuthResult> handleSignInFromLoginPage(String email,
+
+//  Future<AuthResult> handleSignInFromLoginPage(String email,
+//      String password) async {
+
+  Future<UserCredential> handleSignInFromLoginPage(String email,
       String password) async {
-    AuthResult result = await _auth.signInWithEmailAndPassword(email:
+    UserCredential result = await _auth.signInWithEmailAndPassword(email:
     email, password: password);
 
- // print('result:  IIIII   >>>>>  $result'  );
+  print('result:  IIIII   >>>>>  $result'  );
 
 
     if (result.user.email != null) {
-      FirebaseUser fireBaseUserRemote = result.user;
+      User fireBaseUserRemote = result.user;
+
 
       _currentFBUser = fireBaseUserRemote;
 
-      await _saveUser(fireBaseUserRemote, email, password);
+
+      Future<String> x = _currentFBUser.getIdToken();
+
+      x.whenComplete(() {
+        print("_currentFBUser.getIdToken()");
+      }).then((IdtokenResultZZZ) async {
+        print("IdtokenResultZZZ: $IdtokenResultZZZ");
+
+        print("IdtokenResultZZZ 22: ${IdtokenResultZZZ.toString()}");
+
+
+
+//        final tokenStr = token.toString();
+      }).catchError((onError) {
+        print('getting time not successful: $onError');
+        return false;
+      });
+
+      await _saveUser(fireBaseUserRemote.uid,fireBaseUserRemote, email, password);
 
 
       _firebaseUserController.sink.add(_currentFBUser);
 
       return result;
+//
+//
+//                                  RRRRRGHGHGHGH
+
+      
+      // x.whenComplete(() => null)
+      // print(' ||| ||| ||| ||| ||| ||| |||   ||| ||| ||| ||| ||| ||| |||  ==> x: $x');
+
+
+      // print('||| ||| ||| ||| ||| ||| ||| '
+      //     '_currentFBUser.getIdToken() --- --- ---- --- --- --- : ${_currentFBUser.getIdToken()}');
+
+
+
+
     }
     else {
       return result;
@@ -138,7 +193,7 @@ class IdentityBloc implements Bloc {
 
   }
 
-  _saveUser(/*String uid*/ FirebaseUser x, String loggerEmail,
+  _saveUser(String uid, User x, String loggerEmail,
       String loggerPassword) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -157,7 +212,7 @@ class IdentityBloc implements Bloc {
     prefs.setString('userInfo', jsonEncode({
       'email': loggerEmail,
       'password': loggerPassword,
-//      'uid': uid,
+      'uid': uid,
     })).then((onValue) =>
     {
     //  print('at then of prefs.setString(userInfo.....')
@@ -173,24 +228,15 @@ class IdentityBloc implements Bloc {
         resultString
     );
 
-   // print('Howdy, ${user['email']}');
 
-
-   // print('password ${user['password']}');
-
-  //  print('result_in_prefs: ' + resultString);
   }
 
-
-  Future<FirebaseUser> _handleSignIn(String email, String password) async {
-    AuthResult result = await _auth.signInWithEmailAndPassword(email:
+//  Future<FirebaseUser> _handleSignIn(String email, String password) async {
+  Future<User> _handleSignIn(String email, String password) async {
+    UserCredential result = await _auth.signInWithEmailAndPassword(email:
     email, password: password);
 
-//  print('result: '  + result);
-
-   // print('result: ' + result.user.email);
-
-    FirebaseUser fireBaseUserRemote = result.user;
+    User fireBaseUserRemote = result.user;
 
 
     return fireBaseUserRemote;
@@ -262,23 +308,15 @@ class IdentityBloc implements Bloc {
 
       String storedPassWord = user['password'];
 
-     // print('email $storedEmail');
-     // print('password $storedPassWord');
+      String uid = user['uid'];
+      print('---------- uid ------------: $uid');
+
 
       if ((storedEmail != null) && (storedPassWord != null)) {
-      //  print("email && password found");
 
-        // NOW I NEED TO CHECK THIS STORED CREDENTIALS WITH FIREBASE AUTHENTICATION.
-
-        FirebaseUser ourUser = await _handleSignIn(storedEmail, storedPassWord);
-
-//      return Navigator.push(context,
-//          MaterialPageRoute(builder: (context) => drawerScreen())
-//
-//      );
+        User ourUser = await _handleSignIn(storedEmail, storedPassWord);
 
 
-//      _allIngItems = ingItems;
         _currentFBUser = ourUser;
         _firebaseUserController.sink.add(_currentFBUser);
 
@@ -295,12 +333,7 @@ class IdentityBloc implements Bloc {
 
   Future loadUserNotConstructor(/*String uid*/) async {
 
-    // print('at loadUser of Welcome Page');
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-//    ??=
-//    Assign the value only if the variable is null
-
 
 
     final resultString =  prefs.getString("userInfo");
@@ -311,42 +344,17 @@ class IdentityBloc implements Bloc {
         resultString
     );
 
-   // print('Howdy, ${user['email']}!');
-
-
-    // print('password ${user['password']}.');
-
-  //  print('result_in_prefs: WelCome Page ' + resultString);
 
     String storedEmail = user['email'];
 
     String storedPassWord = user['password'];
 
-   // print('email $storedEmail');
-    // print('password $storedPassWord');
 
     if((storedEmail!= null) && (storedPassWord!=null)){
 
-    //  print("email && password found");
-
-      // NOW I NEED TO CHECK THIS STORED CREDENTIALS WITH FIREBASE AUTHENTICATION.
-
-      FirebaseUser ourUser = await _handleSignIn(storedEmail,storedPassWord);
-
-//      return Navigator.push(context,
-//          MaterialPageRoute(builder: (context) => drawerScreen())
-//
-//      );
-
-
-//      _allIngItems = ingItems;
-//
-//      _allIngredientListController.sink.add(ingItems);
+      User ourUser = await _handleSignIn(storedEmail,storedPassWord);
 
     }
-   // print("not found");
-
-    //1 means SharedPreference not empty.
 
   }
 
@@ -355,11 +363,6 @@ class IdentityBloc implements Bloc {
   @override
   void dispose() {
     _firebaseUserController.close();
-
-//    _orderController.close();
-//    _orderTypeController.close();
-//    _customerInformationController.close();
-//    _multiSelectForFoodController.close();
 
   }
 }
