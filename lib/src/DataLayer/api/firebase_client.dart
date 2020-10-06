@@ -33,7 +33,7 @@ import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocID.dart';
 
 
 final String storageBucketURLPredicate =
-    'https://firebasestorage.googleapis.com/v0/b/link-up-b0a24.appspot.com/o/';
+    'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/';
 
 class OrderedFood{
   final String category;      // one of foodItems> collection.
@@ -94,45 +94,17 @@ class FirebaseClient {
 
   }
 
-  Future<QuerySnapshot> fetchAllSauces()async{
+
+
+
+
+  Future<QuerySnapshot> fetchAllOldIngredients()async{
 
     // print ('at here fetchAllIngredients ==================================== *************** ');
 
     var snapshot = await FirebaseFirestore.instance.collection("restaurants")
-        .doc('USWc8IgrHKdjeDe9Ft4j')
-        .collection('sauces').orderBy("sequenceNo", /*descending: false*/)
-        .get();
-
-//    var snapshot= Firestore.instance
-//        .collection("restaurants").doc('kebab_bank').collection('foodItems')
-//        .get();
-
-    return snapshot;
-  }
-
-  Future<QuerySnapshot> fetchAllCheesesORjuusto()async{
-
-    // print ('at here fetchAllIngredients ==================================== *************** ');
-
-    var snapshot = await FirebaseFirestore.instance.collection("restaurants")
-        .doc('USWc8IgrHKdjeDe9Ft4j')
-        .collection('juusto').orderBy("sequenceNo", /*descending: false*/)
-        .get();
-
-//    var snapshot= Firestore.instance
-//        .collection("restaurants").doc('kebab_bank').collection('foodItems')
-//        .get();
-
-    return snapshot;
-  }
-
-  Future<QuerySnapshot> fetchAllIngredients()async{
-
-    // print ('at here fetchAllIngredients ==================================== *************** ');
-
-    var snapshot = await FirebaseFirestore.instance.collection("restaurants")
-        .doc('USWc8IgrHKdjeDe9Ft4j')
-        .collection('ingredients')
+        .doc('kebab_bank')
+        .collection('ingredientsOld')
         .get();
 
 //    var snapshot= Firestore.instance
@@ -265,7 +237,7 @@ class FirebaseClient {
 //    document.id;
 //    ingredientAmountByUser
 
-    print('sauceItems.length: ${sauceItems.length}');
+    // print('sauceItems.length: ${sauceItems.length}');
 
 
     List<Map<String, dynamic>> testIngredients = new List<Map<String, dynamic>>();
@@ -315,8 +287,8 @@ class FirebaseClient {
             '').replaceAll('?alt=media', '')),
 //        ROzgCEcTA7J9FpIIQJra
         'quantity': sf[counter].quantity,
-        'selectedSauces':convertedSauceItems(sf[counter].selectedSauceItems),
-        'selectedCheeses':convertedCheeseItems(sf[counter].selectedCheeseItems),
+        //'selectedSauces':convertedSauceItems(sf[counter].selectedSauceItems),
+        //'selectedCheeses':convertedCheeseItems(sf[counter].selectedCheeseItems),
         'ingredients':convertedIngredients(sf[counter].selectedIngredients),
         'name':sf[counter].foodItemName,
         'oneFoodTypeTotalPrice': sf[counter].quantity * sf[counter].unitPrice,

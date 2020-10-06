@@ -57,7 +57,7 @@ double displayWidth(BuildContext context) {
 
 
 String storageBucketURLPredicate =
-    'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/';
+    'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/';
 
 
 

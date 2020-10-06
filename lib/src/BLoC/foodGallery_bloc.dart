@@ -66,13 +66,15 @@ class FoodGalleryBloc implements Bloc {
   Stream<List<NewCategoryItem>> get categoryItemsStream => _categoriesController.stream;
 
 
-  Future<void> getAllIngredientsConstructor() async {
+  Future<void> getAllOldIngredientsConstructor() async {
     print('at getAllIngredientsConstructor()');
 
 
     if (_isDisposedIngredients == false) {
-      var snapshot = await _client.fetchAllIngredients();
+      var snapshot = await _client.fetchAllOldIngredients();
       List docList = snapshot.docs;
+
+      logger.w("all oldIngredients lenght: ${docList.length} ");
 
 
       List <NewIngredient> ingItems = new List<NewIngredient>();
@@ -108,13 +110,15 @@ class FoodGalleryBloc implements Bloc {
 
         ingItems[i].imageURL= newimageURLIngredient;
 
-        print('newimageURL ingredient Item : $newimageURLIngredient');
+
       }
 
       ingItems.forEach((doc) {
         print('one Extra . . . . . . . name: ${doc.ingredientName} documentID: ${doc.documentId}');
       }
       );
+
+      // logger.i('newimageURL ingredient Item : ${ingItems[0].imageURL}');
 
 
 
@@ -368,7 +372,7 @@ class FoodGalleryBloc implements Bloc {
 
 
 
-    getAllIngredientsConstructor();
+    getAllOldIngredientsConstructor();
 
     getAllFoodItemsConstructor();
 

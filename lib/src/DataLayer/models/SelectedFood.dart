@@ -17,6 +17,7 @@ import 'package:foodgallery/src/DataLayer/models/CheeseItem.dart';
 import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
 import 'package:foodgallery/src/DataLayer/models/CustomerInformation.dart';
 import 'package:foodgallery/src/DataLayer/models/SauceItem.dart';
+import 'package:foodgallery/src/DataLayer/models/FoodPropertyMultiSelect.dart';
 
 
 class SelectedFood {
@@ -34,6 +35,7 @@ class SelectedFood {
   List<CheeseItem>  selectedCheeseItems;
   List<SauceItem>   selectedSauceItems;
   double subTotalPrice;
+  List<FoodPropertyMultiSelect> multiSelct = new List<FoodPropertyMultiSelect>(4);
 
 //  String ingredients;
 //  itemId = await generateItemId(6);

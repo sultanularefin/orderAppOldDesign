@@ -2,6 +2,7 @@
 //import 'package:flutter/material.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //
+
 class FoodPropertyMultiSelect {
 
   String  itemName;
@@ -10,6 +11,8 @@ class FoodPropertyMultiSelect {
   int     index;
   String  borderColor;
   bool    isSelected;
+  String  itemImage;
+  String  itemFullName;
 
 
   FoodPropertyMultiSelect(
@@ -19,7 +22,9 @@ class FoodPropertyMultiSelect {
         this.itemTextColor,
         this.index,
         this.borderColor,
-        this.isSelected,
+        this.isSelected:false,
+        this.itemImage,
+        this.itemFullName,
 
       }
       );
