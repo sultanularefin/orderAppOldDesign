@@ -120,7 +120,7 @@ class FirebaseClient {
 
     var snapshot = await FirebaseFirestore.instance
         .collection('restaurants')
-        .doc('USWc8IgrHKdjeDe9Ft4j')
+        .doc('kebab_bank')
         .get();
     /*
         .then((DocumentSnapshot ds) {
@@ -148,6 +148,7 @@ class FirebaseClient {
     var snapshot = await FirebaseFirestore.instance
         .collection('restaurants')
         .doc('USWc8IgrHKdjeDe9Ft4j').collection('orderList').doc(orderDocumentId)
+        // .doc('__USWc8IgrHKdjeDe9Ft4j__').collection('orderList').doc(orderDocumentId)
         .get();
 
     print('and the snapshot is: $snapshot');
@@ -313,7 +314,7 @@ class FirebaseClient {
 
     final DocumentReference postRef = await FirebaseFirestore.instance.collection(
         "restaurants").
-    doc('USWc8IgrHKdjeDe9Ft4j').
+    doc('kebab_bank').
     collection('orderList').doc(orderDocumentId);
 
 
@@ -343,7 +344,7 @@ class FirebaseClient {
 
      var snapshot = await FirebaseFirestore.instance.collection(
          "restaurants").
-     doc('USWc8IgrHKdjeDe9Ft4j').
+     doc('kebab_bank').
      collection('orderList').doc(orderDocumentId)
          .get();
 //     print('async result [document] for runTransaction in order : $document');
@@ -397,7 +398,7 @@ class FirebaseClient {
 
     DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
-    doc('USWc8IgrHKdjeDe9Ft4j').
+    doc('kebab_bank').
 //    collection('orderList').add(switch (<String, dynamic>{
     collection('orderList').add(<String, dynamic>{
 
